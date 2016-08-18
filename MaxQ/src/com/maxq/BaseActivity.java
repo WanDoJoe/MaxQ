@@ -17,5 +17,10 @@ public abstract class BaseActivity extends Activity{
 	public abstract void initView();
 	public abstract void setDatas();
 	public abstract void onListen();
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		// TODO Auto-generated method stub
+		super.onSaveInstanceState(outState);
+	}
 	
 }
