@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/com.maxq"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
@@ -10,6 +11,7 @@
         android:layout_gravity="top" >
 
         <android.support.v4.view.ViewPager
+            android:id="@+id/vp"
             android:layout_width="match_parent"
             android:layout_height="match_parent" >
         </android.support.v4.view.ViewPager>
@@ -22,10 +24,14 @@
         </LinearLayout>
     </FrameLayout>
 
-    <ListView
+    <com.utils.widget.grid.StaggeredGridView
+        android:id="@+id/listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="121dp" >
-    </ListView>
+        android:layout_marginTop="121dp"
+        android:background="#a1c5c5c5"
+        app:column_count="2"
+        app:item_margin="2dp" >
+    </com.utils.widget.grid.StaggeredGridView>
 
 </FrameLayout>

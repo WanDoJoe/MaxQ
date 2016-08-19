@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/com.maxq.util"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="2dp"
+    android:background="#5c5c5c5c"
+    android:orientation="vertical"
+    android:padding="1dp" >
+
+    <com.utils.widget.grid.util.DynamicHeightImageView
+        android:id="@+id/list_index_item_imgs"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/tum" />
+
+    <com.utils.widget.grid.util.DynamicHeightTextView
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:layout_gravity="bottom"
+        android:text="ssssss"
+        android:background="#91c5c5c5" >
+    </com.utils.widget.grid.util.DynamicHeightTextView>
+
+</FrameLayout>

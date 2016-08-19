@@ -77,21 +77,29 @@ import com.maxq.R;
  */
 public class CustomsWaitDialog extends Dialog {
     private TextView tv;
-
+    private String textViewMassage="";
     public CustomsWaitDialog(Context context) {
         super(context, R.style.DialogTheme);
+    }
+    public CustomsWaitDialog(Context context,String textViewMassage) {
+        super(context, R.style.DialogTheme);
+        this.textViewMassage=textViewMassage;
     }
 
     private CustomsWaitDialog(Context context, int theme) {
         super(context, theme);
     }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_layout);
         tv = (TextView) this.findViewById(R.id.tv);
+        if(null==textViewMassage||textViewMassage.equals("")){
         tv.setText("正在上传...");
+        }else{
+        	tv.setText(textViewMassage);
+        	
+        }
         LinearLayout linearLayout = (LinearLayout) this.findViewById(R.id.LinearLayout);
         linearLayout.getBackground().setAlpha(210);
     }
