@@ -6,6 +6,7 @@
     android:layout_margin="2dp"
     android:background="#5c5c5c5c"
     android:orientation="vertical"
+    android:descendantFocusability="blocksDescendants"
     android:padding="1dp" >
 
     <com.utils.widget.grid.util.DynamicHeightImageView
@@ -14,12 +15,64 @@
         android:layout_height="match_parent"
         android:background="@drawable/tum" />
 
-    <com.utils.widget.grid.util.DynamicHeightTextView
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="32dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:text="ssssss"
-        android:background="#91c5c5c5" >
-    </com.utils.widget.grid.util.DynamicHeightTextView>
+        android:background="#96c5c5c5"
+        android:padding="1dp" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:orientation="vertical" >
+
+            <com.utils.widget.grid.util.DynamicHeightTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text="五个中国字五个中国字五个中国字五个中国字五个中国字"
+                android:textColor="@android:color/black"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+        <com.utils.widget.grid.util.DynamicHeightTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|bottom"
+            android:layout_marginRight="2dp"
+            android:text="100000人喜欢"
+            android:textColor="@android:color/secondary_text_dark_nodisable"
+            android:textSize="13sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|bottom"
+            android:layout_marginLeft="6dp"
+            android:text="100.00"
+            android:textColor="#ff0000"
+            android:textSize="16sp" />
+    </FrameLayout>
+
+    <RelativeLayout
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_gravity="right"
+        android:layout_marginRight="6dp"
+        android:layout_marginTop="6dp"
+        android:background="@drawable/dialog_bg"
+        android:orientation="horizontal" >
+
+        <CheckBox
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:button="@null"
+            android:id="@+id/list_index_item_enjoy"
+            android:background="@drawable/heart_bg" />
+    </RelativeLayout>
 
 </FrameLayout>

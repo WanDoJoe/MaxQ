@@ -31,7 +31,7 @@
         android:layout_marginTop="121dp"
         android:background="#a1c5c5c5"
         app:column_count="2"
-        app:item_margin="2dp" >
+        app:item_margin="8dp" >
     </com.utils.widget.grid.StaggeredGridView>
 
 </FrameLayout>

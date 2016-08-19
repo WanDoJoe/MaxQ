@@ -4,16 +4,18 @@ package com.maxq.activity;
 import java.util.ArrayList;
 import java.util.List;
 
-import okhttp3.internal.cache.DiskLruCache.Snapshot;
-
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.View;
 import android.view.ViewConfiguration;
 import android.widget.AbsListView;
-import android.widget.Toast;
 import android.widget.AbsListView.OnScrollListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.CheckBox;
+import android.widget.Toast;
 
 import com.maxq.BaseActivity;
 import com.maxq.R;
@@ -48,28 +50,53 @@ public class IndexActivity extends BaseActivity {
 		listView=(StaggeredGridView) findViewById(R.id.listview);
 		listView.setFriction(ViewConfiguration.getScrollFriction()*5);//设置listview的滑动速度为远速度的1/5
 	}
-
+	public List<Integer> mPos=new ArrayList<Integer>();//处理checkbox错乱
 	public void setDatas() {
 		loadData();
 		adapter = new CommonAdapter<ImageBean>(IndexActivity.this, items,
 				R.layout.list_index_item) {
 
 			@Override
-			public void conver(ViewHolder holder, ImageBean t) {
+			public void conver(final ViewHolder holder, ImageBean t) {
 				
 //				 holder.getView(R.id.list_index_item_imgs).setBackground(background);
+				final CheckBox cb=holder.getView(R.id.list_index_item_enjoy);
+				cb.setChecked(false);
+				if(mPos.contains(holder.getmPosition())){
+					cb.setChecked(true);
+				}
+				cb.setOnClickListener(new View.OnClickListener() {
+					
+					@Override
+					public void onClick(View arg0) {
+						if(cb.isClickable()){
+							mPos.add(holder.getmPosition());
+						}else{
+							mPos.remove((Integer)holder.getmPosition());
+						}
+					}
+				});
 			}
 		};
 		listView.setAdapter(adapter);
 	}
 
 	public void onListen() {
+		listView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				Toast.makeText(IndexActivity.this, ""+arg2, Toast.LENGTH_SHORT).show();
+			}
+		});
 		setMore();
 	}
 
 	private int visibleLastIndex = 0;   //最后的可视项索引    
     private int visibleItemCountScree;       // 当前窗口可见项总数    
     private int showIndexCount=10;  //每次最多加载条数
+    boolean isLastItem=false;
 	private void setMore() {
 		listView.setOnScrollListener(new OnScrollListener() {
 			@Override
@@ -99,7 +126,9 @@ public class IndexActivity extends BaseActivity {
 		            //start
 		            final CustomsWaitDialog waitDialog=new CustomsWaitDialog(IndexActivity.this,"正在加载");
 		            waitDialog.setCanceledOnTouchOutside(false);
-		            waitDialog.show();
+		            
+		            if(!isLastItem){
+		            	waitDialog.show();
 		            handler.postDelayed(new Runnable() {
 		    			
 		    			@Override
@@ -115,10 +144,14 @@ public class IndexActivity extends BaseActivity {
 //		   					 loadMoreButton.setText("数据加载完");
 				            	Toast.makeText(IndexActivity.this, "数据加载完", Toast.LENGTH_SHORT).show();
 		                   	listView.setSelection(adapter.getCount());
+		                   	isLastItem=true;
 		   					 return;
 		   				}
 		    			}
 		    		}, 1000);
+		            }else{
+//		            	Toast.makeText(IndexActivity.this, "数据加载完", Toast.LENGTH_SHORT).show();
+		            }
 		            //end
 		        }    
 			}

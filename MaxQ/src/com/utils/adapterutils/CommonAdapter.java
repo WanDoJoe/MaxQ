@@ -1,5 +1,6 @@
 package com.utils.adapterutils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -18,6 +19,7 @@ public abstract class CommonAdapter<T> extends BaseAdapter {
 	protected List<T> mList;
 	private int layoutId;
 	protected LayoutInflater inflater;
+	
 	
 	public CommonAdapter(Context mContext, List<T> mList,int layoutId) {
 		this.mContext = mContext;
