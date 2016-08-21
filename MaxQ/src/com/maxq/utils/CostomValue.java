@@ -6,5 +6,6 @@ public class CostomValue {
 	public static final String PATH=Environment.getExternalStorageDirectory()+"/MxQ";
 	public static final String LOG_PATH=PATH+"/log";
 	public static final String CARSH_FILE_PATH=LOG_PATH+"/carsh";
+	public static final boolean DEBUG = true;
 
 }

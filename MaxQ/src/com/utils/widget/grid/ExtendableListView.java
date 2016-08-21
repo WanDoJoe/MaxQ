@@ -17,6 +17,8 @@
 
 package com.utils.widget.grid;
 
+import java.util.ArrayList;
+
 import android.content.Context;
 import android.database.DataSetObserver;
 import android.graphics.Rect;
@@ -28,13 +30,21 @@ import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.*;
+import android.view.HapticFeedbackConstants;
+import android.view.MotionEvent;
+import android.view.VelocityTracker;
+import android.view.View;
+import android.view.View.MeasureSpec;
+import android.view.ViewConfiguration;
+import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.Scroller;
-
-import java.util.ArrayList;
 
 /**
  * An extendable implementation of the Android {@link android.widget.ListView}
@@ -57,7 +67,7 @@ import java.util.ArrayList;
  * Be careful with this - not everything may be how you expect if you assume this to be
  * a regular old {@link android.widget.ListView}
  */
-public abstract class ExtendableListView extends AbsListView {
+public abstract class ExtendableListView extends ListView {
 
     private static final String TAG = "ExtendableListView";
 

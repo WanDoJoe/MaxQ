@@ -4,6 +4,9 @@ package com.maxq.activity;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.xutils.x;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.ViewPager;
@@ -15,6 +18,7 @@ import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.maxq.BaseActivity;
@@ -58,7 +62,7 @@ public class IndexActivity extends BaseActivity {
 
 			@Override
 			public void conver(final ViewHolder holder, ImageBean t) {
-				
+				x.image().bind((ImageView)holder.getView(R.id.list_index_item_imgs),imgUrl);
 //				 holder.getView(R.id.list_index_item_imgs).setBackground(background);
 				final CheckBox cb=holder.getView(R.id.list_index_item_enjoy);
 				cb.setChecked(false);
@@ -88,6 +92,8 @@ public class IndexActivity extends BaseActivity {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 				Toast.makeText(IndexActivity.this, ""+arg2, Toast.LENGTH_SHORT).show();
+				Intent intent=new Intent(IndexActivity.this,HomePageActivity.class);
+				startActivity(intent);
 			}
 		});
 		setMore();
