@@ -13,7 +13,7 @@
         android:id="@+id/list_index_item_imgs"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/tum" />
+        android:background="@drawable/def_image" />
 
     <FrameLayout
         android:layout_width="match_parent"

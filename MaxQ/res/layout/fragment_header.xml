@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="220dp" >
 
-    <ImageView
+
+    <android.support.v4.view.ViewPager
         android:id="@android:id/background"
         android:layout_width="match_parent"
         android:layout_height="220dp"
@@ -41,5 +42,11 @@
         android:layout_width="wrap_content"
         android:layout_height="?android:actionBarSize"
         android:background="@drawable/header_ab_shadow" />
-
+<ImageView
+        android:id="@android:id/icon"
+        android:layout_width="23dp"
+        android:layout_height="23dp"
+        android:scaleType="centerCrop"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/heart_red" />
 </FrameLayout>

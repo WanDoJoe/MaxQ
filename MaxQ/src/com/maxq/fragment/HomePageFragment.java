@@ -1,10 +1,11 @@
-package com.maxq;
+package com.maxq.fragment;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.xutils.x;
+import org.xutils.image.ImageOptions;
 
 import android.app.Activity;
 import android.content.Context;
@@ -15,11 +16,15 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
+import com.maxq.R;
 import com.maxq.activity.HomePageActivity;
 import com.maxq.bean.ImageBean;
 import com.maxq.utils.CostomValue;
@@ -36,6 +41,7 @@ public class HomePageFragment extends HeaderFragment {
 	    private AsyncLoadSomething mAsyncLoadSomething;
 	    private FrameLayout mContentOverlay;
 //	    List<ImageBean> list=new ArrayList<ImageBean>();
+	    public List<Integer> mPos=new ArrayList<Integer>();//处理checkbox错乱
 	    @Override
 	    public void onCreate(Bundle savedInstanceState) {
 	    // TODO Auto-generated method stub
@@ -44,14 +50,15 @@ public class HomePageFragment extends HeaderFragment {
 	    @Override
 	    public void onAttach(Activity activity) {
 	        super.onAttach(activity);
-
 	        setHeaderBackgroundScrollMode(HEADER_BACKGROUND_SCROLL_PARALLAX);
 	        setOnHeaderScrollChangedListener(new OnHeaderScrollChangedListener() {
 	            @Override
 	            public void onHeaderScrollChanged(float progress, int height, int scroll) {
+	            	
 	                height -= getActivity().getActionBar().getHeight();
 
 	                progress = (float) scroll / height;
+	                
 	                if (progress > 1f) progress = 1f;
 
 	                // *
@@ -88,9 +95,20 @@ public class HomePageFragment extends HeaderFragment {
 	    public View onCreateContentView(LayoutInflater inflater, ViewGroup container) {
 	        mListView = (StaggeredGridView) inflater.inflate(R.layout.homepage_list, container, false);
 	        if (mLoaded) setListViewTitles(mListViewTitles);
+	        lisenView();
 	        return mListView;
 	    }
-	    @Override
+	    private void lisenView() {
+	    	mListView.setOnItemClickListener(new OnItemClickListener() {
+
+				@Override
+				public void onItemClick(AdapterView<?> arg0, View arg1,
+						int arg2, long arg3) {
+					
+				}
+			});
+		}
+		@Override
 	    public void onPause() {
 	    // TODO Auto-generated method stub
 	    super.onPause();
@@ -111,21 +129,36 @@ public class HomePageFragment extends HeaderFragment {
 	        mLoaded = true;
 	        mListViewTitles = list;
 	        if (mListView == null) return;
-	        Log.e(this.getClass().getName(), "setListViewTitles");
 	        mListView.setVisibility(View.VISIBLE);
-//	        setListViewAdapter(mListView, new CommonAdapter<ImageBean>(getActivity(),
-//	        		mListViewTitles,R.layout.list_index_item) {
-//
-//				@Override
-//				public void conver(ViewHolder holder, ImageBean t) {
-//					Log.e(this.getClass().getName(), "conver");
+	        setListViewAdapter(mListView, new CommonAdapter<ImageBean>(getActivity(),
+	        		mListViewTitles,R.layout.list_index_item) {
+
+				@Override
+				public void conver(final ViewHolder holder, ImageBean t) {
 //					x.image().bind((ImageView)holder.getView(R.id.list_index_item_imgs),
 //							t.getUrl());
-//				}
-//			});
-	        mListView.setVisibility(View.VISIBLE);
-	        setListViewAdapter(mListView,new myAdapter(getActivity(), 
-	        		mListViewTitles, R.layout.list_index_item));
+					x.image().bind((ImageView)holder.getView(R.id.list_index_item_imgs),
+							t.getUrl(),new ImageOptions.Builder().setSize(120, 260).build());
+					final CheckBox cb=holder.getView(R.id.list_index_item_enjoy);
+					cb.setChecked(false);
+					if(mPos.contains(holder.getmPosition())){
+						cb.setChecked(true);
+					}
+					cb.setOnClickListener(new View.OnClickListener() {
+						
+						@Override
+						public void onClick(View arg0) {
+							if(cb.isClickable()){
+								mPos.add(holder.getmPosition());
+							}else{
+								mPos.remove((Integer)holder.getmPosition());
+							}
+						}
+					});
+				}
+			});
+//	        setListViewAdapter(mListView,new myAdapter(getActivity(), 
+//	        		mListViewTitles, R.layout.list_index_item));
 	    }
 	    public class myAdapter extends BaseAdapter{
 	    	Context context;
@@ -155,7 +188,6 @@ public class HomePageFragment extends HeaderFragment {
 			@Override
 			public View getView(int arg0, View arg1, ViewGroup arg2) {
 				HonderView honderView;
-				Log.e(this.getClass().getName(), "getView");
 				if(arg1==null){
 					arg1=LayoutInflater.from(context).inflate(layout, null);
 					honderView=new HonderView();

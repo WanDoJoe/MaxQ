@@ -1,9 +1,23 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" >
+
+    <group
+        android:id="@+id/action_more"
+        android:orderInCategory="100"
+        android:showAsAction="always"
+        android:title="@string/action_settings" >
+        <item
+            android:id="@+id/action_settings"
+            android:title="@string/action_settings"/>
+        <item
+            android:id="@+id/action_aa"
+            android:title="@string/header_title"/>
+    </group>
 
     <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:showAsAction="never"
-        android:title="@string/action_settings"/>
+        android:id="@+id/actionbar_search"
+        android:actionViewClass="android.widget.SearchView"
+        android:showAsAction="always"
+        android:title="搜索"/>
 
 </menu>

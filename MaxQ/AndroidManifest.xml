@@ -29,8 +29,8 @@
         android:name="com.maxq.CustomApplication"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.maxq.activity.IndexActivity"
-            android:label="@string/app_name" >
+            android:name="com.maxq.activity.HomePageActivity"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -38,7 +38,7 @@
             </intent-filter>
         </activity>
         <activity android:name="com.maxq.BaseActivity"></activity>
-        <activity android:name="com.maxq.activity.HomePageActivity"></activity>
+        <service android:name="com.maxq.service.NetWorkService"></service>
     </application>
 
 </manifest>

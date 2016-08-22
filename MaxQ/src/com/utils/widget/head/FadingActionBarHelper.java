@@ -16,6 +16,7 @@
 
 package com.utils.widget.head;
 
+import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -23,6 +24,7 @@ import android.util.Log;
 
 /**
  * Created by AChep@xda <artemchep@gmail.com>
+ * 设置titlebar的辅助类
  */
 public class FadingActionBarHelper {
 
@@ -47,7 +49,7 @@ public class FadingActionBarHelper {
         setActionBarBackgroundDrawable(drawable, true);
     }
 
-    public void setActionBarBackgroundDrawable(Drawable drawable, boolean mutate) {
+	public void setActionBarBackgroundDrawable(Drawable drawable, boolean mutate) {
         mDrawable = mutate ? drawable.mutate() : drawable;
         mActionBar.setBackgroundDrawable(mDrawable);
 
