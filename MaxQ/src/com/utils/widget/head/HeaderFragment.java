@@ -53,7 +53,6 @@ import android.widget.Space;
 import android.widget.TextView;
 
 import com.maxq.BaseActivity;
-import com.maxq.BaseActivity.MyTouchListener;
 import com.utils.widget.grid.StaggeredGridView;
 
 /**
@@ -73,7 +72,7 @@ import com.utils.widget.grid.StaggeredGridView;
 //  It was    {-` _.-'}
 //  amazing!   `":=:"`
 //              `---`
-public abstract class HeaderFragment extends Fragment {
+public abstract class HeaderFragment extends Fragment implements ScollToTop {
 
     private static final String TAG = "HeaderFragment";
 
@@ -91,16 +90,18 @@ public abstract class HeaderFragment extends Fragment {
     private int mHeaderHeight;
     private int mHeaderScroll;
 
-    private int mHeaderBackgroundScrollMode = HEADER_BACKGROUND_SCROLL_NORMAL;
-
+//    private int mHeaderBackgroundScrollMode = HEADER_BACKGROUND_SCROLL_NORMAL;
+    private int mHeaderBackgroundScrollMode = HEADER_BACKGROUND_SCROLL_PARALLAX;
+//    private int mHeaderBackgroundScrollMode = HEADER_BACKGROUND_SCROLL_STATIC;
     private Space mFakeHeader;
     private boolean isListViewEmpty;
     
-    private ViewPager viewPager;
+    
     // listeners
     private AbsListView.OnScrollListener mOnScrollListener;
     private OnHeaderScrollChangedListener mOnHeaderScrollChangedListener;
     //设置head自动轮询的
+    private ViewPager viewPager;
     List<View> list=new ArrayList<View>();
     PagerAdapter fpa;
     private int currentItem  = 0;//当前页面  
@@ -134,8 +135,6 @@ public abstract class HeaderFragment extends Fragment {
         mHeaderBackground = mHeader.findViewById(android.R.id.background);
         assert mHeader.getLayoutParams() != null;
         mHeaderHeight = mHeader.getLayoutParams().height;
-        setViewpage();
-        setViewRefresh();
         mFakeHeader = new Space(activity);
         mFakeHeader.setLayoutParams(
                 new ListView.LayoutParams(0, mHeaderHeight));
@@ -324,9 +323,17 @@ public abstract class HeaderFragment extends Fragment {
     public int getHeaderBackgroundScrollMode() {
         return mHeaderBackgroundScrollMode;
     }
-    /**
+    
+    
+    
+    
+    
+//    public View getHeaderView(){
+//    	return this.mHeader;
+//    }
+   /* *//**
      * 此方法用于设置轮询是头部
-     */
+     *//*
     private void setViewpage() {
     	viewPager=(ViewPager) mHeader.findViewById(android.R.id.background);
     	ImageOptions options=new ImageOptions.Builder()
@@ -399,9 +406,9 @@ public abstract class HeaderFragment extends Fragment {
 			}
 		});
 	}
-    /**
+    *//**
      * viewpager轮询的主要代码
-     */
+     *//*
     public Handler handler = new Handler(){  
     	  
         @Override  
@@ -412,18 +419,18 @@ public abstract class HeaderFragment extends Fragment {
             }  
         }  
     };  
-    /** 
+    *//** 
      * 开始轮播图切换 
-     */  
+     *//*  
     private void startPlay(){  
         scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();  
         scheduledExecutorService.scheduleAtFixedRate(new SlideShowTask(), TASKTIME, 4, TimeUnit.SECONDS);  
        //根据他的参数说明，第一个参数是执行的任务，第二个参数是第一次执行的间隔，第三个参数是执行任务的周期；  
     }  
-    /** 
+    *//** 
      *执行轮播图切换任务 
      * 
-     */  
+     *//*  
     private class SlideShowTask implements Runnable{  
 
         @Override  
@@ -441,145 +448,18 @@ public abstract class HeaderFragment extends Fragment {
     public HeaderFragment isImageMemCaches(boolean isImageMemCache){
     	this.isImageMemCache=isImageMemCache;
     	return this;
-    }
+    }*/
     //下拉刷新
-    ImageView refreshImageView;
-    public void setViewRefresh(){
-    	refreshImageView=(ImageView) mHeader.findViewById(android.R.id.icon);
-    	//在该Fragment的构造函数中注册mTouchListener的回调
-    	headerViewHeight=refreshImageView.getMeasuredHeight();
-    	refreshImageView.setPadding(0, 32, 0, 0);
-    	refreshImageView.setVisibility(View.GONE);
-        ((BaseActivity)this.getActivity()).registerMyTouchListener(mTouchListener);
-    }
-    public interface OnRefreshListener {
-    	  /**
-    	   * 下拉刷新
-    	   */
-    	  void onDownPullRefresh();
-    	  /**
-    	   * 上拉加载更多
-    	   */
-    	  void onLoadingMore();
-    	}
-    /**
-    * 设置刷新监听事件
-    * 
-    * @param listener
-    */
-   public void setOnRefreshListener(OnRefreshListener listener) {
-     mOnRefershListener = listener;
-   }
-    ///
+//    ImageView refreshImageView;
+//    public void setViewRefresh(){
+//    	refreshImageView=(ImageView) mHeader.findViewById(android.R.id.icon);
+//    	//在该Fragment的构造函数中注册mTouchListener的回调
+//    	headerViewHeight=refreshImageView.getMeasuredHeight();
+//    	refreshImageView.setPadding(0, 32, 0, 0);
+//    	refreshImageView.setVisibility(View.GONE);
+//        ((BaseActivity)this.getActivity()).registerMyTouchListener(mTouchListener);
+//    }
     
-    private int firstVisibleItemPosition; // 屏幕显示在第一个的item的索引
-    private int downY; // 按下时y轴的偏移量
-    private int headerViewHeight; // 头布局的高度
-
-    private final int DOWN_PULL_REFRESH = 0; // 下拉刷新状态
-    private final int RELEASE_REFRESH = 1; // 松开刷新
-    private final int REFRESHING = 2; // 正在刷新中
-    private int currentState = DOWN_PULL_REFRESH; // 头布局的状态: 默认为下拉刷新状态
-
-    private Animation upAnimation; // 向上旋转的动画
-    private Animation downAnimation; // 向下旋转的动画
-
-    private ImageView ivArrow; // 头布局的剪头
-    private ProgressBar mProgressBar; // 头布局的进度条
-    private TextView tvState; // 头布局的状态
-    private TextView tvLastUpdateTime; // 头布局的最后更新时间
-
-    private OnRefreshListener mOnRefershListener;
-    private boolean isScrollToBottom; // 是否滑动到底部
-    private View footerView; // 脚布局的对象
-    private int footerViewHeight; // 脚布局的高度
-    private boolean isLoadingMore = false; // 是否正在加载更多中
-    
-    /**
-     * Fragment中，注册
-     * 接收MainActivity的Touch回调的对象
-     * 重写其中的onTouchEvent函数，并进行该Fragment的逻辑处理
-     */
-     private MyTouchListener mTouchListener = new MyTouchListener() {
-		@Override
-		public void onTouchEvent(MotionEvent event) {
-			 // TODO Auto-generated method stub
-//			ScrollTop=0时为滚动到顶部
-			switch (event.getAction()) {
-		      case MotionEvent.ACTION_DOWN :
-		        downY = (int) event.getY();
-		        break;
-		      case MotionEvent.ACTION_MOVE :
-		        int moveY = (int) event.getY();
-		        // 移动中的y - 按下的y = 间距.
-		        int diff = (moveY - downY) / 2;
-		        // -头布局的高度 + 间距 = paddingTop
-		        int paddingTop = -headerViewHeight + diff;
-		        // 如果: -头布局的高度 > paddingTop的值 执行super.onTouchEvent(ev);
-//		        if (headerViewHeight < paddingTop) {
-		        if ( diff>48) {
-		        	refreshImageView.setVisibility(View.VISIBLE);
-		          if (paddingTop > 0 && currentState == DOWN_PULL_REFRESH) { // 完全显示了.
-		            Log.i(TAG, "松开刷新");
-		            currentState = RELEASE_REFRESH;
-		            refreshHeaderView();
-		          } else if (paddingTop < 0 && currentState == RELEASE_REFRESH) { // 没有显示完全
-		            Log.i(TAG, "下拉刷新");
-		            currentState = DOWN_PULL_REFRESH;
-//		            refreshHeaderView();
-		          }
-		          // 下拉头布局
-		          refreshImageView.setPadding(0, paddingTop, 0, 0);
-		        }
-		        break;
-		      case MotionEvent.ACTION_UP :
-		        // 判断当前的状态是松开刷新还是下拉刷新
-		        if (currentState == RELEASE_REFRESH) {
-		          Log.i(TAG, "刷新数据.");
-		          // 把头布局设置为完全显示状态
-		          refreshImageView.setPadding(0, 0, 0, 0);
-		          // 进入到正在刷新中状态
-		          currentState = REFRESHING;
-//		          refreshHeaderView();
-
-		          if (mOnRefershListener != null) {
-		            mOnRefershListener.onDownPullRefresh(); // 调用使用者的监听方法
-		          }
-		        } else if (currentState == DOWN_PULL_REFRESH) {
-		          // 隐藏头布局
-		        	refreshImageView.setPadding(0, -headerViewHeight, 0, 0);
-		          refreshImageView.setVisibility(View.GONE);
-		        }
-		        break;
-		      default :
-		        break;
-		    }
-		}
-	};
-
-	/**
-	   * 根据currentState刷新头布局的状态
-	   */
-	  private void refreshHeaderView() {
-	    switch (currentState) {
-	      case DOWN_PULL_REFRESH : // 下拉刷新状态
-	        tvState.setText("下拉刷新");
-	        ivArrow.startAnimation(downAnimation); // 执行向下旋转
-	        break;
-	      case RELEASE_REFRESH : // 松开刷新状态
-	        tvState.setText("松开刷新");
-	        ivArrow.startAnimation(upAnimation); // 执行向上旋转
-	        break;
-	      case REFRESHING : // 正在刷新中状态
-	        ivArrow.clearAnimation();
-	        ivArrow.setVisibility(View.GONE);
-	        mProgressBar.setVisibility(View.VISIBLE);
-	        tvState.setText("正在刷新中...");
-	        break;
-	      default :
-	        break;
-	    }
-	  }
 
    
 }

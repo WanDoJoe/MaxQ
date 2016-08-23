@@ -17,7 +17,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.maxq.R;
-import com.utils.widget.head.HeaderFragment.OnRefreshListener;
 
 public class RefreshListView  extends ListView implements OnScrollListener {
 
@@ -267,4 +266,17 @@ public class RefreshListView  extends ListView implements OnScrollListener {
 	    footerView.setPadding(0, -footerViewHeight, 0, 0);
 	    isLoadingMore = false;
 	  }
-	}
+	  
+	  public interface OnRefreshListener {
+    	  /**
+    	   * 下拉刷新
+    	   */
+    	  void onDownPullRefresh();
+    	  /**
+    	   * 上拉加载更多
+    	   */
+    	  void onLoadingMore();
+    	}
+	  
+
+}
