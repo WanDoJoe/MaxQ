@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Button xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/actionbar_back"
+    android:layout_width="48dp"
+    android:layout_height="44dp"
+    android:background="#ffffffff"
+    android:drawableLeft="@drawable/heart_red"
+    android:text="返回"
+    android:textColor="@android:color/black" />

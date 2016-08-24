@@ -45,6 +45,7 @@ import com.utils.adapterutils.CommonAdapter;
 import com.utils.adapterutils.ViewHolder;
 import com.utils.widget.grid.StaggeredGridView;
 import com.utils.widget.head.HeaderFragment;
+import com.utils.xutils.httpapi.CustomsWaitDialog;
 
 @SuppressLint("ValidFragment")
 public class HomePageFragment<T> extends HeaderFragment {
@@ -222,7 +223,9 @@ public class HomePageFragment<T> extends HeaderFragment {
 	        private static final String TAG = "AsyncLoadSomething";
 
 	        final WeakReference<HomePageFragment> weakFragment;
-
+	        
+	        CustomsWaitDialog waitDialog=new CustomsWaitDialog(getActivity());
+	        
 	        public AsyncLoadSomething(HomePageFragment fragment) {
 	            this.weakFragment = new WeakReference<HomePageFragment>(fragment);
 	        }
@@ -230,7 +233,7 @@ public class HomePageFragment<T> extends HeaderFragment {
 	        @Override
 	        protected void onPreExecute() {
 	            super.onPreExecute();
-
+	            waitDialog.show();
 	            final HomePageFragment audioFragment = weakFragment.get();
 	            if (audioFragment.mListView != null) audioFragment.mListView.setVisibility(View.INVISIBLE);
 	            if (audioFragment.mContentOverlay != null) audioFragment.mContentOverlay.setVisibility(View.VISIBLE);
@@ -246,7 +249,13 @@ public class HomePageFragment<T> extends HeaderFragment {
 //	                e.printStackTrace();
 //	            }
 	            ArrayList<ImageBean> list=new ArrayList<ImageBean>();
-	            String imgUrl="http://img30.360buyimg.com/popWareDetail/jfs/t2887/35/3271499137/813367/859aa57f/57873e9bN6d0a42a6.jpg";
+	            String imgUrl;
+	            if(ptrTimes%2==0){
+	            	imgUrl ="http://d.hiphotos.baidu.com/image/pic/item/38dbb6fd5266d01622b0017d9f2bd40735fa353d.jpg"
+					;
+	            }else{
+	            imgUrl="http://img30.360buyimg.com/popWareDetail/jfs/t2887/35/3271499137/813367/859aa57f/57873e9bN6d0a42a6.jpg";
+	            }
 	            for (int i = 0; i < 31; i++) {
 	    			ImageBean bean=new ImageBean();
 	    			bean.setUrl(imgUrl);
@@ -270,6 +279,7 @@ public class HomePageFragment<T> extends HeaderFragment {
 
 	            if (audioFragment.mContentOverlay != null) audioFragment.mContentOverlay.setVisibility(View.GONE);
 	            audioFragment.setListViewTitles(titles);
+	            waitDialog.dismiss();
 	        }
 	    }
 	    
@@ -403,6 +413,18 @@ public class HomePageFragment<T> extends HeaderFragment {
 	                handler.sendEmptyMessage(100);  
 	            }  
 	        }  
-	    }  
+	    }
+
+
+
+	    int ptrTimes=0;
+		@Override
+		public void update() {
+			cancelAsyncTask(mAsyncLoadSomething);
+	        mAsyncLoadSomething = new AsyncLoadSomething(this);
+	        mAsyncLoadSomething.execute();
+	        ptrTimes++;
+		}  
+	    
 	    
 }
