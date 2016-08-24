@@ -5,6 +5,7 @@ import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 import android.app.ActionBar;
 import android.app.ActionBar.LayoutParams;
+import android.content.Intent;
 import android.graphics.drawable.GradientDrawable.Orientation;
 import android.os.Bundle;
 import android.util.Log;
@@ -119,6 +120,9 @@ public class HomePageActivity extends BaseActivity {
 		if(item.getItemId()==R.id.action_settings){
 //			Log.e(this.getClass().getName(), editText.getText().toString());
 //			Toast.makeText(getApplicationContext(), editText.getText().toString(), Toast.LENGTH_SHORT).show();
+			Intent intent=new Intent(this,GoodsActivity.class);
+			startActivity(intent);
+			
 		}
 		return super.onOptionsItemSelected(item);
 	}

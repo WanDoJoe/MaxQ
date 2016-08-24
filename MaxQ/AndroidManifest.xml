@@ -40,7 +40,9 @@
         </activity>
         <activity android:name="com.maxq.activity.LoginActivity" >
         </activity>
-
+		<activity android:name="com.maxq.activity.GoodsActivity"></activity> 
+		
+		
         <service android:name="com.maxq.service.NetWorkService" >
         </service>
     </application>

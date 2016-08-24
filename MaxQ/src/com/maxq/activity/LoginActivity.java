@@ -77,6 +77,12 @@ public class LoginActivity extends BaseActivity {
 				ptr.refreshComplete();
 				ptrTimes++;
 			}
+			@Override
+			public boolean checkCanDoRefresh(PtrFrameLayout frame,
+					View content, View header) {
+				// TODO Auto-generated method stub
+				return false;
+			}
 		});
 
 		// 自动刷新
