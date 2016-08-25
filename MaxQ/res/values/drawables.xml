@@ -3,5 +3,6 @@
 
     <!-- Action bar background -->
     <item name="actionbar_bg" type="drawable">@color/actionbar_bg</item>
+    <item name="actionbar_bg_transparent" type="drawable">@color/actionbar_bg_transparent</item>
 
 </resources>

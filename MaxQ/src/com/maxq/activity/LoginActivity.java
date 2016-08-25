@@ -140,8 +140,8 @@ public class LoginActivity extends BaseActivity {
 			if(contentView==null){
 				hondleView=new HondleView();
 				if(list.get(arg0).getUrl().equals("")){
-					contentView=LayoutInflater.from(context).inflate(R.layout.index_goods_title_layout, null);
-					hondleView.title=(TextView) contentView.findViewById(R.id.index_goods_title);
+//					contentView=LayoutInflater.from(context).inflate(R.layout.goods_group_item, null);
+//					hondleView.title=(TextView) contentView.findViewById(R.id.index_goods_title);
 				}else{
 					contentView=LayoutInflater.from(context).inflate(R.layout.list_index_item, null);
 					hondleView.title=(TextView) contentView.findViewById(R.id.list_index_item_title);

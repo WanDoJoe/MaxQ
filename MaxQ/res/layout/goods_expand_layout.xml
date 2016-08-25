@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="?android:attr/actionBarSize"
+    android:orientation="vertical" >
+
+	<!-- <com.utils.widget.pull.PullToRefreshView
+	    android:id="@+id/myexpandalist_pull"
+	     android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:background="#00000000" > -->
+    <ExpandableListView
+        android:id="@+id/myexpandalist"
+        android:layout_width="match_parent"
+        android:groupIndicator="@null"
+        android:layout_height="wrap_content" >
+    </ExpandableListView>
+
+<!-- </com.utils.widget.pull.PullToRefreshView> -->
+</LinearLayout>

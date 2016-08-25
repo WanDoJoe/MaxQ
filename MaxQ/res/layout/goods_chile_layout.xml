@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.utils.widget.MyGridView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/goods_child_gridview"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="#cacaca"
+    android:columnCount="2" >
+
+</com.utils.widget.MyGridView>

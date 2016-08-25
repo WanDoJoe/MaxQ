@@ -42,6 +42,8 @@ import android.view.ViewParent;
 import android.view.animation.Animation;
 import android.widget.AbsListView;
 import android.widget.BaseAdapter;
+import android.widget.BaseExpandableListAdapter;
+import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -283,6 +285,13 @@ public abstract class HeaderFragment extends Fragment implements ScollToTop {
     public void setListViewAdapter(ListView listView, ListAdapter adapter) {
         isListViewEmpty = adapter == null;
         listView.setAdapter(null);
+        listView.removeHeaderView(mFakeHeader);
+        listView.addHeaderView(mFakeHeader);
+        listView.setAdapter(adapter);
+    }
+    public void setListViewAdapter(ExpandableListView listView, BaseExpandableListAdapter adapter) {
+        isListViewEmpty = adapter == null;
+//        listView.setAdapter(null);
         listView.removeHeaderView(mFakeHeader);
         listView.addHeaderView(mFakeHeader);
         listView.setAdapter(adapter);
