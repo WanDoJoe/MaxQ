@@ -1,22 +1,44 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources xmlns:tools="http://schemas.android.com/tools" xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!--
         Base application theme, dependent on API level. This theme is replaced
-        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
     -->
     <style name="AppBaseTheme" parent="android:Theme.Light">
         <!--
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
-            backward-compatibility can go here.
+            backward-compatibility can go here.
         -->
     </style>
-     <!-- Base application theme. -->
+    <!-- Base application theme. -->
     <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
+        <item name="android:windowNoTitle">true</item>
         <item name="android:windowActionBarOverlay">true</item>
         <item name="android:windowContentOverlay">@null</item>
     </style>
 
+    <style name="customTheme" parent="AppBaseTheme">
+        <item name="android:windowNoTitle">false</item>
+        <item name="android:windowActionBarOverlay">true</item>
+    </style>
+
+    <style name="transparentTheme" parent="android:Theme.Holo.Light.DarkActionBar">
+
+        <!-- 让actionbar漂浮 -->
+        <item name="android:windowActionBarOverlay">true</item>
+        <!-- 去掉ActionBar与Activity之间的蓝色横线 -->
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:actionBarStyle">@style/LoginActionbarStyle</item>
+    </style>
+
+    <style name="LoginActionbarStyle" parent="@android:style/Widget.Holo.Light.ActionBar">
+
+        <!-- 设置actionbar 背景色 透明 -->
+        <item name="android:background">#00000000</item>
+        <item name="android:backgroundStacked">#346c36</item>
+        <item name="android:backgroundSplit">#00000000</item>
+    </style>
 
     <style name="DialogTheme" parent="@android:style/Theme.Dialog">
         <item name="android:windowBackground">@android:color/transparent</item>
@@ -33,12 +55,14 @@
     <style name="CustomCheckboxTheme" parent="@android:style/Widget.CompoundButton.CheckBox">
         <item name="android:button">@drawable/heart_bg</item>
     </style>
-    
-     <!--  ************************
+
+    <!--
+           ************************
           ||||||||||||||||||||||||
                    HEADER
           ||||||||||||||||||||||||
-          ************************  -->
+          ************************
+    -->
     <style name="Header.TitleText" parent="android:TextAppearance.Holo">
         <item name="android:fontFamily" tools:ignore="NewApi">sans-serif-light</item>
         <item name="android:textColor">@android:color/white</item>
@@ -58,4 +82,5 @@
         <attr name="horizontal_spacing" format="dimension" />
         <attr name="vertical_spacing" format="dimension" />
     </declare-styleable>
+
 </resources>

@@ -4,6 +4,12 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.GridView;
 
+/**
+ * 可以嵌套的GridView
+ * 所有absListView 只要复写onMeasure 即可实现正常嵌套
+ * @author sinosoft_wan
+ *
+ */
 public class MyGridView extends GridView{
 	public MyGridView(Context context,
 			AttributeSet attrs) {

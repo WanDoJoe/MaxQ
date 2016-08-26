@@ -4,5 +4,5 @@
     <!-- Action bar background -->
     <item name="actionbar_bg" type="drawable">@color/actionbar_bg</item>
     <item name="actionbar_bg_transparent" type="drawable">@color/actionbar_bg_transparent</item>
-
+	<item name="actionbar_bg_transparent50" type="drawable">@color/actionbar_bg_transparent50</item>
 </resources>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/goods_header_viewpage"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/tum" >
+    </android.support.v4.view.ViewPager>
+
+    <GridView
+        android:id="@+id/goods_header_girdview"
+        android:layout_width="match_parent"
+        android:layout_height="148dp"
+        android:layout_marginTop="2dp"
+        android:background="#d4d4d4"
+        android:layout_marginBottom="2dp"
+        android:numColumns="4" >
+    </GridView>
+
+</LinearLayout>

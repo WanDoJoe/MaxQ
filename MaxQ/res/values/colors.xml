@@ -4,5 +4,6 @@
     <!-- Action bar background -->
     <color name="actionbar_bg">#0099CC</color>
     <color name="actionbar_bg_transparent">#000099CC</color>
-
+    <color name="actionbar_bg_transparent50">#800099CC</color>
+	<color name="transparent30_gray">#4cc5c5c5</color><!--透明度30% -->
 </resources>
