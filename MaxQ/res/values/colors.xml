@@ -5,5 +5,11 @@
     <color name="actionbar_bg">#0099CC</color>
     <color name="actionbar_bg_transparent">#000099CC</color>
     <color name="actionbar_bg_transparent50">#800099CC</color>
-	<color name="transparent30_gray">#4cc5c5c5</color><!--透明度30% -->
+    <!-- 透明度30% -->
+    <color name="transparent30_gray">#4cc5c5c5</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="actionbarandstatusbar">#D9434F</color>
+	<color name="actionbarandstatusbar_gray50">#accfcfcf</color>
+	
+	<color name="black">#000000</color>
 </resources>

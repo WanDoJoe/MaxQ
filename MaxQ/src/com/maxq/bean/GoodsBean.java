@@ -12,8 +12,17 @@ public class GoodsBean implements Serializable {
 	private String type;
 	private List<ImageBean> imageBeans;
 	private int id;
+	private String infomaction;
 	private boolean isExpand;
 	
+	public String getInfomaction() {
+		return infomaction;
+	}
+
+	public void setInfomaction(String infomaction) {
+		this.infomaction = infomaction;
+	}
+
 	public boolean isExpand() {
 		return isExpand;
 	}

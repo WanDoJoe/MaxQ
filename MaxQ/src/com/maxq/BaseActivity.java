@@ -2,10 +2,15 @@ package com.maxq;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 
 import com.maxq.service.NetWorkService;
+import com.readystatesoftware.systembartint.SystemBarTintManager;
+import com.utils.tools.DeviceUtil;
 
 public abstract class BaseActivity extends Activity {
 	Intent netWorkIntent;
@@ -17,6 +22,35 @@ public abstract class BaseActivity extends Activity {
 		netWorkIntent = new Intent(this, NetWorkService.class);
 		startService(netWorkIntent);
 	}
+	protected void statusBar(View actionBar) {
+		 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+	            setTranslucentStatus(true);
+	        
+
+//	        SystemBarTintManager tintManager = new SystemBarTintManager(this);
+//	        tintManager.setStatusBarTintEnabled(true);
+//	        tintManager.setStatusBarTintResource(R.color.actionbar_bg_transparent);
+	        setTranslucentStatus(true);
+	        SystemBarTintManager tintManager = new SystemBarTintManager(this);
+	        tintManager.setStatusBarTintEnabled(true);
+	        tintManager.setStatusBarTintResource(R.color.actionbarandstatusbar);
+//	        SystemBarConfig config = tintManager.getConfig();
+//	        findViewById(R.id.goods_expand_layout).setPadding(0,DeviceUtil.getStatusBarHeight(this), 0,0);
+	        actionBar.setPadding(0,DeviceUtil.getStatusBarHeight(this), 0,0);
+		  }
+	}
+	public void setTranslucentStatus(boolean b) {
+        Window window = getWindow();
+        WindowManager.LayoutParams layoutParams = window.getAttributes();
+
+        int bits = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
+        if (b) {
+            layoutParams.flags |= bits;
+        } else {
+            layoutParams.flags &= ~bits;
+        }
+        window.setAttributes(layoutParams);
+    }
 
 	/*@Override
 	public void setContentView(int layoutResID) {

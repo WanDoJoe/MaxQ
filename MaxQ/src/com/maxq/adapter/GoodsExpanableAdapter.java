@@ -36,7 +36,9 @@ public class GoodsExpanableAdapter extends BaseExpandableListAdapter implements
 		OnItemClickListener{
 	
 	public static final int ItemHeight = 48;// 每项的高度
-	public static final int PaddingLeft = 36;// 每项的高度
+	public static final int PaddingLeft = 48;// 每项的高度
+	int HorizontalSpacing=0;// 水平间隔
+	int VerticalSpacing=0;//垂直间隔
 //	private int myPaddingLeft = 0;
 
 	private MyGridView toolbarGrid;
@@ -70,6 +72,7 @@ public class GoodsExpanableAdapter extends BaseExpandableListAdapter implements
 	/**
 	 * 可自定义ExpandableListView
 	 */
+	
 	@Override
 	public View getChildView(int groupPosition, int childPosition,
 			boolean isLastChild, View convertView, ViewGroup parent) {
@@ -79,8 +82,8 @@ public class GoodsExpanableAdapter extends BaseExpandableListAdapter implements
 			toolbarGrid = (MyGridView) convertView.findViewById(R.id.goods_child_gridview);
 			toolbarGrid.setNumColumns(2);// 设置每行列数
 			toolbarGrid.setGravity(Gravity.CENTER);// 位置居中
-			toolbarGrid.setHorizontalSpacing(10);// 水平间隔
-			toolbarGrid.setVerticalSpacing(10);//垂直间隔
+			toolbarGrid.setHorizontalSpacing(HorizontalSpacing);// 水平间隔
+			toolbarGrid.setVerticalSpacing(VerticalSpacing);//垂直间隔
 			toolbarGrid.setBottom(10);
 			toolbarGrid.setAdapter(new CommonAdapter<ImageBean>(parentContext,
 					goodsBeans.get(groupPosition).getImageBeans(),

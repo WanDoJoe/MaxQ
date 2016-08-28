@@ -2,6 +2,7 @@ package in.srain.cube.views.ptr;
 
 import android.view.View;
 import android.widget.AbsListView;
+import android.widget.ScrollView;
 
 public abstract class PtrDefaultHandler implements PtrHandler {
 
@@ -22,7 +23,7 @@ public abstract class PtrDefaultHandler implements PtrHandler {
 
     /**
      * Default implement for check can perform pull to refresh
-     *
+     *	判断当前是否可以下拉刷新
      * @param frame
      * @param content
      * @param header
@@ -31,9 +32,10 @@ public abstract class PtrDefaultHandler implements PtrHandler {
     public static boolean checkContentCanBePulledDown(PtrFrameLayout frame, View content, View header) {
         return !canChildScrollUp(content);
     }
-
+  
     @Override
     public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
         return checkContentCanBePulledDown(frame, content, header);
     }
+
 }

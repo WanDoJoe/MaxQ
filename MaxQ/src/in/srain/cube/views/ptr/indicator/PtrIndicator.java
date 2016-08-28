@@ -6,31 +6,53 @@ public class PtrIndicator {
 
     public final static int POS_START = 0;
     protected int mOffsetToRefresh = 0;
+    protected int mOffsetToLoadMore = 0;
     private PointF mPtLastMove = new PointF();
     private float mOffsetX;
     private float mOffsetY;
     private int mCurrentPos = 0;
     private int mLastPos = 0;
     private int mHeaderHeight;
+    private int mFooterHeight;
     private int mPressedPos = 0;
+    private boolean isHeader = true;
 
     private float mRatioOfHeaderHeightToRefresh = 1.2f;
-    private float mResistance = 1.7f;
+    private float mResistanceHeader = 1.7f;
+    private float mResistanceFooter = 1.7f;
     private boolean mIsUnderTouch = false;
     private int mOffsetToKeepHeaderWhileLoading = -1;
     // record the refresh complete position
     private int mRefreshCompleteY = 0;
 
+
+
+    public boolean isHeader() {
+        return isHeader;
+    }
+
+    public void setIsHeader(boolean isHeader) {
+        this.isHeader = isHeader;
+    }
+
     public boolean isUnderTouch() {
         return mIsUnderTouch;
     }
 
-    public float getResistance() {
-        return mResistance;
+    public float getResistanceHeader() {
+        return mResistanceHeader;
     }
 
-    public void setResistance(float resistance) {
-        mResistance = resistance;
+    public float getResistanceFooter() {
+        return mResistanceFooter;
+    }
+
+    public void setResistanceHeader(float resistance) {
+        mResistanceHeader = resistance;
+    }
+
+    public void setResistanceFooter(float resistance) {
+        mResistanceFooter = resistance;
     }
 
     public void onRelease() {
@@ -46,12 +68,13 @@ public class PtrIndicator {
     }
 
     protected void processOnMove(float currentX, float currentY, float offsetX, float offsetY) {
-        setOffset(offsetX, offsetY / mResistance);
+        setOffset(offsetX, offsetY / mResistanceHeader);
     }
 
     public void setRatioOfHeaderHeightToRefresh(float ratio) {
         mRatioOfHeaderHeightToRefresh = ratio;
         mOffsetToRefresh = (int) (mHeaderHeight * ratio);
+        mOffsetToLoadMore = (int) (mFooterHeight * ratio);
     }
 
     public float getRatioOfHeaderToHeightRefresh() {
@@ -62,9 +85,14 @@ public class PtrIndicator {
         return mOffsetToRefresh;
     }
 
+    public int getOffsetToLoadMore() {
+        return mOffsetToLoadMore;
+    }
+
     public void setOffsetToRefresh(int offset) {
         mRatioOfHeaderHeightToRefresh = mHeaderHeight * 1f / offset;
         mOffsetToRefresh = offset;
+        mOffsetToLoadMore = offset;
     }
 
     public void onPressDown(float x, float y) {
@@ -123,8 +151,14 @@ public class PtrIndicator {
         updateHeight();
     }
 
+    public void setFooterHeight(int height) {
+        mFooterHeight = height;
+        updateHeight();
+    }
+
     protected void updateHeight() {
         mOffsetToRefresh = (int) (mRatioOfHeaderHeightToRefresh * mHeaderHeight);
+        mOffsetToLoadMore = (int) (mRatioOfHeaderHeightToRefresh * mFooterHeight);
     }
 
     public void convertFrom(PtrIndicator ptrSlider) {
@@ -174,7 +208,11 @@ public class PtrIndicator {
     }
 
     public int getOffsetToKeepHeaderWhileLoading() {
-        return mOffsetToKeepHeaderWhileLoading >= 0 ? mOffsetToKeepHeaderWhileLoading : mHeaderHeight;
+        if(isHeader) {
+            return mOffsetToKeepHeaderWhileLoading >= 0 ? mOffsetToKeepHeaderWhileLoading : mHeaderHeight;
+        }else{
+            return mOffsetToKeepHeaderWhileLoading >= 0 ? mOffsetToKeepHeaderWhileLoading : mFooterHeight;
+        }
     }
 
     public boolean isAlreadyHere(int to) {

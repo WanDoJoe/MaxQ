@@ -84,11 +84,7 @@ public class WindmillHeader extends FrameLayout implements PtrUIHandler {
         drawable.start();
     }
 
-    @Override
-    public void onUIRefreshComplete(PtrFrameLayout ptrFrameLayout) {
-        ivWindmill.clearAnimation();
-        tvHeadTitle.setText("刷新完成");
-    }
+   
 
 	public void onUIPositionChange(PtrFrameLayout frame, boolean isUnderTouch,
 			byte status, int lastPos, int currentPos, float oldPercent,
@@ -131,5 +127,15 @@ public class WindmillHeader extends FrameLayout implements PtrUIHandler {
 				tvHeadTitle.setText("松开刷新");
 			}
 		}
+	}
+//	 @Override
+//	    public void onUIRefreshComplete(PtrFrameLayout ptrFrameLayout) {
+//	        ivWindmill.clearAnimation();
+//	        tvHeadTitle.setText("刷新完成");
+//	    }
+	@Override
+	public void onUIRefreshComplete(PtrFrameLayout frame, boolean isHeader) {
+		ivWindmill.clearAnimation();
+        tvHeadTitle.setText("刷新完成");		
 	}
 }

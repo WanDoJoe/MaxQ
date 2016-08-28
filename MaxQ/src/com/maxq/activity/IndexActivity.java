@@ -2,23 +2,25 @@ package com.maxq.activity;
 
 
 
-import in.srain.cube.views.ptr.PtrClassicFrameLayout;
-import in.srain.cube.views.ptr.PtrDefaultHandler;
-import in.srain.cube.views.ptr.PtrFrameLayout;
 import android.app.ActivityGroup;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.maxq.R;
+import com.readystatesoftware.systembartint.SystemBarTintManager;
+import com.readystatesoftware.systembartint.SystemBarTintManager.SystemBarConfig;
 
 @SuppressWarnings("deprecation")
 public class IndexActivity extends ActivityGroup implements RadioGroup.OnCheckedChangeListener{
 	
+	RadioButton homeRb,productRb,cartBr,memberRb;
 	 RadioGroup tabRadioGroup;
 	 LinearLayout  index_containerBody;
 	@Override
@@ -28,6 +30,7 @@ public class IndexActivity extends ActivityGroup implements RadioGroup.OnChecked
 		initView();
 		initLayout();
 		setRefresh();
+		 
 	}
 
 	private void setRefresh() {
@@ -37,7 +40,10 @@ public class IndexActivity extends ActivityGroup implements RadioGroup.OnChecked
 		tabRadioGroup=(RadioGroup) findViewById(R.id.index_activity_tab);
 		index_containerBody=(LinearLayout ) findViewById(R.id.index_containerBody);
 		tabRadioGroup.setOnCheckedChangeListener(this);
-		
+		homeRb = (RadioButton) findViewById(R.id.index_activity_home);
+		productRb = (RadioButton) findViewById(R.id.index_activity_product);
+		cartBr = (RadioButton) findViewById(R.id.index_activity_cart);
+		memberRb = (RadioButton) findViewById(R.id.index_activity_member);
 	}
 	
 	
@@ -66,18 +72,18 @@ public class IndexActivity extends ActivityGroup implements RadioGroup.OnChecked
 					.getDecorView());
 			// titleTv.setText("主页");
 			break;
-		case R.id.index_activity_seach:
+		case R.id.index_activity_product:
 			Log.e(this.getClass().getName(), "index_activity_home");
 			index_containerBody.removeAllViews();
 			index_containerBody.addView(getLocalActivityManager()
 					.startActivity(
 							"seach",
-							new Intent(IndexActivity.this, HomePageActivity.class)
+							new Intent(IndexActivity.this, ProductActivity.class)
 									.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
 					.getDecorView());
 			// titleTv.setText("发现");
 			break;
-		case R.id.index_activity_msg:
+		case R.id.index_activity_cart:
 			Log.e(this.getClass().getName(), "index_activity_home");
 			index_containerBody.removeAllViews();
 			index_containerBody.addView(getLocalActivityManager()
@@ -88,7 +94,7 @@ public class IndexActivity extends ActivityGroup implements RadioGroup.OnChecked
 					.getDecorView());
 			// titleTv.setText("信息");
 			break;
-		case R.id.index_activity_user:
+		case R.id.index_activity_member:
 			Log.e(this.getClass().getName(), "index_activity_home");
 			index_containerBody.removeAllViews();
 			index_containerBody.addView(getLocalActivityManager()
@@ -103,4 +109,5 @@ public class IndexActivity extends ActivityGroup implements RadioGroup.OnChecked
 			break;
 		}
 	}
+	
 }

@@ -136,12 +136,12 @@ class PtrUIHandlerHolder implements PtrUIHandler {
     }
 
     @Override
-    public void onUIRefreshComplete(PtrFrameLayout frame) {
+    public void onUIRefreshComplete(PtrFrameLayout frame, boolean isHeader) {
         PtrUIHandlerHolder current = this;
         do {
             final PtrUIHandler handler = current.getHandler();
             if (null != handler) {
-                handler.onUIRefreshComplete(frame);
+                handler.onUIRefreshComplete(frame, isHeader);
             }
         } while ((current = current.mNext) != null);
     }

@@ -29,7 +29,7 @@ public interface PtrUIHandler {
     /**
      * perform UI after refresh
      */
-    public void onUIRefreshComplete(PtrFrameLayout frame);
+    public void onUIRefreshComplete(PtrFrameLayout frame, boolean isHeader);
 
     public void onUIPositionChange(PtrFrameLayout frame, boolean isUnderTouch, byte status, PtrIndicator ptrIndicator);
 }

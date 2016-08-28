@@ -1,7 +1,11 @@
 package com.maxq.activity;
 
 import in.srain.cube.views.ptr.PtrClassicFrameLayout;
+import in.srain.cube.views.ptr.PtrDefaultHandler;
+import in.srain.cube.views.ptr.PtrDefaultHandler2;
 import in.srain.cube.views.ptr.PtrFrameLayout;
+import in.srain.cube.views.ptr.PtrHandler2;
+import in.srain.cube.views.ptr.PtrFrameLayout.Mode;
 import in.srain.cube.views.ptr.PtrHandler;
 
 import java.util.ArrayList;
@@ -13,8 +17,7 @@ import java.util.concurrent.TimeUnit;
 import org.xutils.x;
 import org.xutils.image.ImageOptions;
 
-import android.app.ActionBar;
-import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -23,17 +26,21 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.view.ViewParent;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnGroupClickListener;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,12 +49,13 @@ import com.maxq.R;
 import com.maxq.adapter.GoodsExpanableAdapter;
 import com.maxq.bean.GoodsBean;
 import com.maxq.bean.ImageBean;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.readystatesoftware.systembartint.SystemBarTintManager;
+import com.readystatesoftware.systembartint.SystemBarTintManager.SystemBarConfig;
 import com.utils.adapterutils.CommonAdapter;
 import com.utils.adapterutils.ViewHolder;
+import com.utils.tools.DeviceUtil;
 import com.utils.widget.MyExpandableListView;
+import com.utils.widget.MyExpandableListView.OnPageLoadListener;
 import com.utils.widget.MyGridView;
 import com.utils.widget.MyScrollView;
 import com.utils.widget.head.ScollToTop;
@@ -57,22 +65,50 @@ import com.utils.widget.header.WindmillHeader;
  * @author sinosoft_wan
  *
  */
-public class GoodsActivity extends BaseActivity implements ScollToTop{
+public class GoodsActivity extends BaseActivity implements ScollToTop,OnPageLoadListener{
 	List<GoodsBean> beans;
-	boolean isTop;
+	boolean isTop,isLoadMore;
 	PtrClassicFrameLayout mPtrClassicFrameLayout;
 	MyScrollView goodsexpandscrollview;
+	GoodsExpanableAdapter adapter;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.goods_expand_layout);
-		
 		setdata();
 		initViews();
 		setHeader();
+		statusBar(findViewById(R.id.goods_expand_layout));
+//		 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//	            setTranslucentStatus(true);
+//	        
+//
+////	        SystemBarTintManager tintManager = new SystemBarTintManager(this);
+////	        tintManager.setStatusBarTintEnabled(true);
+////	        tintManager.setStatusBarTintResource(R.color.actionbar_bg_transparent);
+//	        setTranslucentStatus(true);
+//	        SystemBarTintManager tintManager = new SystemBarTintManager(this);
+//	        tintManager.setStatusBarTintEnabled(true);
+//	        tintManager.setStatusBarTintResource(R.color.actionbarandstatusbar);
+////	        SystemBarConfig config = tintManager.getConfig();
+//	        findViewById(R.id.goods_expand_layout).setPadding(0,DeviceUtil.getStatusBarHeight(this), 0,0);
+//		  }
 	}
 
+
+	@Override
+	public void onPageChanging(int pageSize, int pageIndex) {
+		// 加载数据
+//		  LoadBindData load = new LoadBindData(pageSize, pageIndex);
+//		  load.execute();
+	}
+
+	@Override
+	public boolean canLoadData() {
+//		return (adapter.getGroupCount() >= messageSize) ? false : true;;
+		return false;
+	}
 
 
 	private void setdata() {
@@ -99,9 +135,12 @@ public class GoodsActivity extends BaseActivity implements ScollToTop{
 	private void initViews() {
 		goodsexpandscrollview=(MyScrollView) findViewById(R.id.goods_expand_scrollview);
 		expandableListView = (MyExpandableListView) findViewById(R.id.myexpandalist);
+		expandableListView.setVisibility(View.GONE);
+		expandableListView.setOnPageLoadListener(this);
+		
 		expandableListView.setFriction(ViewConfiguration.getScrollFriction()*5);
 		// myadapter adapter=new myadapter(beans, this);
-		GoodsExpanableAdapter adapter = new GoodsExpanableAdapter(this, beans);
+		adapter = new GoodsExpanableAdapter(this, beans);
 		expandableListView.setAdapter(adapter);
 		if (adapter.getGroupCount() > 0) {
 			for (int i = 0; i < adapter.getGroupCount(); i++) {
@@ -129,31 +168,74 @@ public class GoodsActivity extends BaseActivity implements ScollToTop{
 		});
 		
 		mPtrClassicFrameLayout=(PtrClassicFrameLayout) findViewById(R.id.goods_expand_ptrRefresh_fl);
-		mPtrClassicFrameLayout.setPullToRefresh(false);
+		mPtrClassicFrameLayout.setPullToRefresh(false);//true自动刷新
+		mPtrClassicFrameLayout.setMode(Mode.BOTH);
 		final WindmillHeader header = new WindmillHeader(this);// 自定义头部
 		mPtrClassicFrameLayout.setHeaderView(header);
 		mPtrClassicFrameLayout.addPtrUIHandler(header);
-		mPtrClassicFrameLayout.setPtrHandler(new PtrHandler() {
+		
+		mPtrClassicFrameLayout.setPtrHandler(new PtrHandler2() {
+			
 			@Override
-            public void onRefreshBegin(final PtrFrameLayout frame) {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-//                        ImageLoader.getInstance().
-//                        displayImage(Constants.VERTICAL_IMAGE_URLS[ptrTimes % Constants.VERTICAL_IMAGE_URLS.length], 
-//                        		ivImage, listener);
-                    	mPtrClassicFrameLayout.refreshComplete();
-                    }
-                },3000);
-
-            }
+			public void onRefreshBegin(PtrFrameLayout frame) {
+				 new Handler().postDelayed(new Runnable() {
+                   @Override
+                   public void run() {
+                   	mPtrClassicFrameLayout.refreshComplete();
+                   }
+               },2000);
+			}
+			
 			@Override
 			public boolean checkCanDoRefresh(PtrFrameLayout frame, View content,
 					View header) {
-				return isTop;
-				
+//				frame.
+				return  PtrDefaultHandler.checkContentCanBePulledDown(frame, content, header);
+			}
+			
+			@Override
+			public void onLoadMoreBegin(PtrFrameLayout frame) {
+				 new Handler().postDelayed(new Runnable() {
+	                   @Override
+	                   public void run() {
+						expandableListView.setVisibility(View.VISIBLE);
+						mPtrClassicFrameLayout.refreshComplete();
+	                   }
+	               },2000);
+			}
+			
+			@Override
+			public boolean checkCanDoLoadMore(PtrFrameLayout frame, View content,
+					View footer) {
+				isLoadMore=PtrDefaultHandler2.checkContentCanBePulledUp(frame, content, footer);
+				if(isLoadMore){
+					mPtrClassicFrameLayout.autoLoadMore(false);
+				}
+				return  isLoadMore;
 			}
 		});
+		
+//		mPtrClassicFrameLayout.setPtrHandler(new PtrHandler() {
+//			@Override
+//            public void onRefreshBegin(final PtrFrameLayout frame) {
+//                new Handler().postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+////                        ImageLoader.getInstance().
+////                        displayImage(Constants.VERTICAL_IMAGE_URLS[ptrTimes % Constants.VERTICAL_IMAGE_URLS.length], 
+////                        		ivImage, listener);
+//                    	mPtrClassicFrameLayout.refreshComplete();
+//                    }
+//                },2000);
+//
+//            }
+//			@Override
+//			public boolean checkCanDoRefresh(PtrFrameLayout frame, View content,
+//					View header) {
+//				return isTop;
+//				
+//			}
+//		});
 	}
 
 	//TODO goodsHeader
@@ -201,6 +283,7 @@ public class GoodsActivity extends BaseActivity implements ScollToTop{
     private long TASKTIME=2;
     private boolean isImageMemCache=true;//设置图片是否内存缓存 默认缓存
     private ViewPager viewPager;
+    private ImageView[] indicator_imgs ;//存放引到图片数组
     private void setViewpage(View mHeader) {
     	viewPager=(ViewPager) findViewById(R.id.goods_header_viewpage);
     	ImageOptions options=new ImageOptions.Builder()
@@ -256,6 +339,24 @@ public class GoodsActivity extends BaseActivity implements ScollToTop{
 				return list.size();
 			}
 		};
+		LinearLayout layout=(LinearLayout) findViewById(R.id.goods_header_viewpage_icon_ll);
+		layout.setGravity(Gravity.RIGHT|Gravity.CENTER_VERTICAL);
+		layout.setPadding(0, 0,40,0);
+		indicator_imgs=new ImageView[fpa.getCount()];
+		for (int i = 0; i < fpa.getCount(); i++) {
+			ImageView imageView=new ImageView(GoodsActivity.this);
+			LinearLayout.LayoutParams params_linear = new LinearLayout.LayoutParams(20,20);
+		      params_linear.setMargins(0, 0, 5, 0);
+//			imageView.setLayoutParams(new LayoutParams(20, 20));
+			imageView.setPadding(0, 0, 10, 0);
+			if(i==0){
+				imageView.setBackground(getResources().getDrawable(R.drawable.round_icon_light));
+			}else{
+				imageView.setBackground(getResources().getDrawable(R.drawable.round_icon_gray));
+			}
+			indicator_imgs[i]=imageView;
+			layout.addView(imageView,params_linear);
+		}
          viewPager.setAdapter(fpa);
          if(isAutoPlay){
         	 startPlay();
@@ -264,12 +365,19 @@ public class GoodsActivity extends BaseActivity implements ScollToTop{
 			@Override
 			public void onPageSelected(int position) {
 				currentItem = position;
+				for (int i = 0; i < indicator_imgs.length; i++) {
+					indicator_imgs[position].setBackgroundResource(R.drawable.round_icon_light);
+					if (position != i) {
+						indicator_imgs[i].setBackgroundResource(R.drawable.round_icon_gray);
+					}
+				}
 			}
 			@Override
 			public void onPageScrolled(int arg0, float arg1, int arg2) {
 			}
 			@Override
 			public void onPageScrollStateChanged(int arg0) {
+				
 			}
 		});
 	}
@@ -336,4 +444,17 @@ public class GoodsActivity extends BaseActivity implements ScollToTop{
 	public void update() {
 		
 	}
+
+//	public void setTranslucentStatus(boolean b) {
+//        Window window = getWindow();
+//        WindowManager.LayoutParams layoutParams = window.getAttributes();
+//
+//        int bits = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
+//        if (b) {
+//            layoutParams.flags |= bits;
+//        } else {
+//            layoutParams.flags &= ~bits;
+//        }
+//        window.setAttributes(layoutParams);
+//    }
 }

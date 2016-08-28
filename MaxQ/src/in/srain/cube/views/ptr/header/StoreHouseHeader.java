@@ -266,7 +266,7 @@ public class StoreHouseHeader extends View implements PtrUIHandler {
     }
 
     @Override
-    public void onUIRefreshComplete(PtrFrameLayout frame) {
+    public void onUIRefreshComplete(PtrFrameLayout frame, boolean isHeader) {
         loadFinish();
     }
 

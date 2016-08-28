@@ -26,7 +26,7 @@
     <RadioGroup
         android:id="@+id/index_activity_tab"
         android:layout_width="fill_parent"
-        android:layout_height="48dp"
+        android:layout_height="56dp"
         android:layout_gravity="bottom"
         android:orientation="horizontal" >
 
@@ -44,7 +44,7 @@
             android:textSize="12dp" />
 
         <RadioButton
-            android:id="@+id/index_activity_seach"
+            android:id="@+id/index_activity_product"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -56,7 +56,7 @@
             android:textSize="12dp" />
 
         <RadioButton
-            android:id="@+id/index_activity_msg"
+            android:id="@+id/index_activity_cart"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -68,13 +68,13 @@
             android:textSize="12dp" />
 
         <RadioButton
-            android:id="@+id/index_activity_user"
+            android:id="@+id/index_activity_member"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/public_click_bg"
             android:button="@null"
-            android:drawableTop="@drawable/ic_launcher"
+            android:drawableTop="@drawable/round_icon_gray"
             android:gravity="center_horizontal"
             android:text="个人中心"
             android:textSize="12dp" />

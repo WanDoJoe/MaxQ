@@ -156,7 +156,7 @@ public class MaterialHeader extends View implements PtrUIHandler {
      * @param frame
      */
     @Override
-    public void onUIRefreshComplete(PtrFrameLayout frame) {
+    public void onUIRefreshComplete(PtrFrameLayout frame, boolean isHeader) {
         mDrawable.stop();
     }
 
