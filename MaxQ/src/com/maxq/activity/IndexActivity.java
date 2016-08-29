@@ -48,7 +48,7 @@ public class IndexActivity extends ActivityGroup implements RadioGroup.OnChecked
 	
 	
 	 private void initLayout() {
-	        index_containerBody.removeAllViews();
+//	        index_containerBody.removeAllViews();
 	        index_containerBody.addView(getLocalActivityManager().startActivity(
 	                "home",
 	                new Intent(IndexActivity.this, GoodsActivity.class)
@@ -88,8 +88,8 @@ public class IndexActivity extends ActivityGroup implements RadioGroup.OnChecked
 			index_containerBody.removeAllViews();
 			index_containerBody.addView(getLocalActivityManager()
 					.startActivity(
-							"msg",
-							new Intent(IndexActivity.this, GoodsActivity.class)
+							"shopcar",
+							new Intent(IndexActivity.this, ShopcartActivity.class)
 									.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
 					.getDecorView());
 			// titleTv.setText("信息");

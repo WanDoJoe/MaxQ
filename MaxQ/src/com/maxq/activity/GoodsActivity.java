@@ -67,7 +67,7 @@ import com.utils.widget.header.WindmillHeader;
  */
 public class GoodsActivity extends BaseActivity implements ScollToTop,OnPageLoadListener{
 	List<GoodsBean> beans;
-	boolean isTop,isLoadMore;
+	boolean isTop,isLoadMore=false;
 	PtrClassicFrameLayout mPtrClassicFrameLayout;
 	MyScrollView goodsexpandscrollview;
 	GoodsExpanableAdapter adapter;
@@ -131,7 +131,9 @@ public class GoodsActivity extends BaseActivity implements ScollToTop,OnPageLoad
 	}
 
 	MyExpandableListView expandableListView;
-
+	boolean isLoadMores=false;//显示第一行解决焦点冲突；
+	int maxCount=0;
+	int loadCount=0;
 	private void initViews() {
 		goodsexpandscrollview=(MyScrollView) findViewById(R.id.goods_expand_scrollview);
 		expandableListView = (MyExpandableListView) findViewById(R.id.myexpandalist);
@@ -143,6 +145,8 @@ public class GoodsActivity extends BaseActivity implements ScollToTop,OnPageLoad
 		adapter = new GoodsExpanableAdapter(this, beans);
 		expandableListView.setAdapter(adapter);
 		if (adapter.getGroupCount() > 0) {
+			maxCount=adapter.getGroupCount();
+			
 			for (int i = 0; i < adapter.getGroupCount(); i++) {
 				expandableListView.expandGroup(i);
 			}
@@ -199,6 +203,10 @@ public class GoodsActivity extends BaseActivity implements ScollToTop,OnPageLoad
 	                   @Override
 	                   public void run() {
 						expandableListView.setVisibility(View.VISIBLE);
+						if(isLoadMores){
+						expandableListView.setSelectedGroup(2);
+						isLoadMores=false;
+						}
 						mPtrClassicFrameLayout.refreshComplete();
 	                   }
 	               },2000);
@@ -207,10 +215,12 @@ public class GoodsActivity extends BaseActivity implements ScollToTop,OnPageLoad
 			@Override
 			public boolean checkCanDoLoadMore(PtrFrameLayout frame, View content,
 					View footer) {
+					
 				isLoadMore=PtrDefaultHandler2.checkContentCanBePulledUp(frame, content, footer);
-				if(isLoadMore){
-					mPtrClassicFrameLayout.autoLoadMore(false);
-				}
+//				if(isLoadMore){
+//					mPtrClassicFrameLayout.autoLoadMore(false);
+//				}
+//				isLoadMores=true;
 				return  isLoadMore;
 			}
 		});

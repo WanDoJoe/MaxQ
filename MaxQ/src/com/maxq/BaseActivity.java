@@ -39,6 +39,23 @@ public abstract class BaseActivity extends Activity {
 	        actionBar.setPadding(0,DeviceUtil.getStatusBarHeight(this), 0,0);
 		  }
 	}
+	protected void statusBar(View actionBar,int color) {
+		 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+	            setTranslucentStatus(true);
+	        
+
+//	        SystemBarTintManager tintManager = new SystemBarTintManager(this);
+//	        tintManager.setStatusBarTintEnabled(true);
+//	        tintManager.setStatusBarTintResource(R.color.actionbar_bg_transparent);
+	        setTranslucentStatus(true);
+	        SystemBarTintManager tintManager = new SystemBarTintManager(this);
+	        tintManager.setStatusBarTintEnabled(true);
+	        tintManager.setStatusBarTintResource(color);
+//	        SystemBarConfig config = tintManager.getConfig();
+//	        findViewById(R.id.goods_expand_layout).setPadding(0,DeviceUtil.getStatusBarHeight(this), 0,0);
+	        actionBar.setPadding(0,DeviceUtil.getStatusBarHeight(this), 0,0);
+		  }
+	}
 	public void setTranslucentStatus(boolean b) {
         Window window = getWindow();
         WindowManager.LayoutParams layoutParams = window.getAttributes();
