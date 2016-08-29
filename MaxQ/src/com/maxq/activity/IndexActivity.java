@@ -4,6 +4,7 @@ package com.maxq.activity;
 
 import android.app.ActivityGroup;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,6 +17,7 @@ import android.widget.RadioGroup;
 import com.maxq.R;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.readystatesoftware.systembartint.SystemBarTintManager.SystemBarConfig;
+import com.utils.tools.DeviceUtil;
 
 @SuppressWarnings("deprecation")
 public class IndexActivity extends ActivityGroup implements RadioGroup.OnCheckedChangeListener{
@@ -44,6 +46,18 @@ public class IndexActivity extends ActivityGroup implements RadioGroup.OnChecked
 		productRb = (RadioButton) findViewById(R.id.index_activity_product);
 		cartBr = (RadioButton) findViewById(R.id.index_activity_cart);
 		memberRb = (RadioButton) findViewById(R.id.index_activity_member);
+		
+		
+		homeRb.setCompoundDrawables(null, setCompoundDrawables(R.drawable.ic_launcher,32,32), null, null);
+		productRb.setCompoundDrawables(null, setCompoundDrawables(R.drawable.ic_launcher,32,32), null, null);
+		cartBr.setCompoundDrawables(null,setCompoundDrawables(R.drawable.ic_launcher,32,32), null, null);
+		memberRb.setCompoundDrawables(null, setCompoundDrawables(R.drawable.ic_launcher,32,32), null, null);
+	}
+	
+	public Drawable setCompoundDrawables(int resDrawable,int widthDp,int heightDp){
+		Drawable drawable = getResources().getDrawable(resDrawable);
+		drawable.setBounds(0, 0, DeviceUtil.dp2px(this, widthDp),DeviceUtil.dp2px(this, heightDp));
+		return drawable;
 	}
 	
 	

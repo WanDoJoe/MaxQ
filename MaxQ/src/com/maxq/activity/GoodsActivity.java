@@ -202,12 +202,14 @@ public class GoodsActivity extends BaseActivity implements ScollToTop,OnPageLoad
 				 new Handler().postDelayed(new Runnable() {
 	                   @Override
 	                   public void run() {
+	                	   mPtrClassicFrameLayout.refreshComplete();
 						expandableListView.setVisibility(View.VISIBLE);
 						if(isLoadMores){
 						expandableListView.setSelectedGroup(2);
 						isLoadMores=false;
 						}
-						mPtrClassicFrameLayout.refreshComplete();
+//						goodsexpandscrollview.scrollTo(0, expandableListView.getMeasuredHeight() - expandableListView.getHeight());  
+						
 	                   }
 	               },2000);
 			}
@@ -322,7 +324,7 @@ public class GoodsActivity extends BaseActivity implements ScollToTop,OnPageLoad
 			}
 
 			@Override
-			public Object instantiateItem(ViewGroup container, int position) { // 这个方法用来实例化页卡
+			public Object instantiateItem(ViewGroup container, final int position) { // 这个方法用来实例化页卡
 				ImageView view = (ImageView) list.get(position) ;  
 			    ViewParent vp =  view.getParent();  
 			    if(vp != null){  
@@ -336,6 +338,13 @@ public class GoodsActivity extends BaseActivity implements ScollToTop,OnPageLoad
 			    //添加过了,这时在添加，就会重复，所以才会有需要移除异常的报告  
 			    ((ViewPager)container).addView(list.get(position)); 
 //				container.addView(list.get(position), 0);// 添加页卡
+			    view.setOnClickListener(new View.OnClickListener() {
+					
+					@Override
+					public void onClick(View arg0) {
+						Toast.makeText(GoodsActivity.this, "sss"+position, Toast.LENGTH_SHORT).show();
+					}
+				});
 				return list.get(position);
 			}
 
@@ -388,6 +397,12 @@ public class GoodsActivity extends BaseActivity implements ScollToTop,OnPageLoad
 			@Override
 			public void onPageScrollStateChanged(int arg0) {
 				
+			}
+		});
+         viewPager.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
 			}
 		});
 	}
