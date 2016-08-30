@@ -16,7 +16,7 @@
         android:orientation="horizontal" >
 
         <ImageView
-            android:id="@+id/seach_adapter_list_pic"
+            android:id="@+id/search_list_item_pic"
             android:layout_width="85dp"
             android:layout_height="85dp"
             android:layout_marginBottom="6dp"
@@ -31,7 +31,7 @@
             android:layout_marginLeft="13dp" >
 
             <TextView
-                android:id="@+id/seach_intro"
+                android:id="@+id/search_list_item_intro"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
@@ -43,17 +43,17 @@
                 android:textSize="@dimen/txt_12" />
 
             <RelativeLayout
-                android:id="@+id/seach_price_rl"
+                android:id="@+id/search_list_item_price_rl"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_below="@+id/seach_intro"
+                android:layout_below="@+id/search_list_item_intro"
                 android:layout_marginTop="2dp"
                 android:orientation="horizontal" >
 
                 <TextView
-                    android:id="@+id/seach_price"
+                    android:id="@+id/search_list_item_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:singleLine="true"
@@ -63,12 +63,12 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/seach_discount_price"
+                    android:id="@+id/search_list_item_discount_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
                     android:layout_marginTop="2dp"
-                    android:layout_toRightOf="@+id/seach_price"
+                    android:layout_toRightOf="@+id/search_list_item_price"
                     android:text="sssssss"
                     android:textColor="@color/gray"
                     android:textSize="@dimen/txt_10" />
@@ -82,15 +82,15 @@
                     android:orientation="horizontal" >
 
                     <RatingBar
-                        android:id="@+id/search_rtbar"
+                        android:id="@+id/search_list_item_rtbar"
                         style="@style/searchRatingBar"
                         android:layout_width="wrap_content"
-                        android:layout_height="8dp"
+                        android:layout_height="10dp"
                         android:numStars="5"
                         android:rating="5" />
 
                     <TextView
-                        android:id="@+id/search_discount_price"
+                        android:id="@+id/search_list_item_rtbar_numb"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
@@ -126,7 +126,7 @@
                     android:orientation="horizontal" >
 
                     <TextView
-                        android:id="@+id/search_reduce"
+                        android:id="@+id/search_list_item_reduce"
                         android:layout_width="35dp"
                         android:layout_height="35dp"
                         android:background="@drawable/text_angle_gray"
@@ -136,7 +136,7 @@
                         android:textSize="@dimen/txt_12" />
 
                     <TextView
-                        android:id="@+id/search_num"
+                        android:id="@+id/search_list_item_num"
                         android:layout_width="35dp"
                         android:layout_height="35dp"
                         android:background="@drawable/text_angle"
@@ -168,7 +168,7 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/search_goods_delete"
+                android:id="@+id/search_list_item_goods_delete"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"

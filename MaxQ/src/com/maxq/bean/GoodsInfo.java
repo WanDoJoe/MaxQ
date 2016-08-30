@@ -39,45 +39,51 @@ public class GoodsInfo {
 		return gid;
 	}
 
-	public void setGid(int gid) {
+	public GoodsInfo setGid(int gid) {
 		this.gid = gid;
+		 return this;
 	}
 
 	public double getDiscountPrice() {
         return discountPrice;
     }
 
-    public void setDiscountPrice(double discountPrice) {
+    public GoodsInfo setDiscountPrice(double discountPrice) {
         this.discountPrice = discountPrice;
+        return this;
     }
 
     public int getGoodsImg() {
         return goodsImg;
     }
 
-    public void setGoodsImg(int goodsImg) {
+    public GoodsInfo setGoodsImg(int goodsImg) {
         this.goodsImg = goodsImg;
+        return this;
     }
 
     public String getColor() {
         return color;
     }
 
-    public void setColor(String color) {
+    public GoodsInfo setColor(String color) {
         this.color = color;
+        return this;
     }
 
     public String getSize() {
         return size;
     }
 
-    public void setSize(String size) {
+    public GoodsInfo setSize(String size) {
         this.size = size;
+        return this;
     }
-
-    public GoodsInfo(String id, String name, String desc, double price, int count, String color,
+    public GoodsInfo(){}
+    public GoodsInfo(int gid,String id, String name, String desc, double price, int count, String color,
              String size, int goodsImg,double discountPrice) {
-        Id = id;
+    	this.gid=gid;
+    	this.Id = id;
         this.name = name;
         this.desc = desc;
         this.price = price;
@@ -92,64 +98,72 @@ public class GoodsInfo {
         return Id;
     }
 
-    public void setId(String id) {
+    public GoodsInfo setId(String id) {
         Id = id;
+        return this;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public GoodsInfo setName(String name) {
         this.name = name;
+        return this;
     }
 
     public boolean isChoosed() {
         return isChoosed;
     }
 
-    public void setChoosed(boolean isChoosed) {
+    public GoodsInfo setChoosed(boolean isChoosed) {
         this.isChoosed = isChoosed;
+        return this;
     }
 
     public String getImageUrl() {
         return imageUrl;
     }
 
-    public void setImageUrl(String imageUrl) {
+    public GoodsInfo setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+        return this;
     }
 
     public String getDesc() {
         return desc;
     }
 
-    public void setDesc(String desc) {
+    public GoodsInfo setDesc(String desc) {
         this.desc = desc;
+        return this;
     }
 
     public int getCount() {
         return count;
     }
 
-    public void setCount(int count) {
+    public GoodsInfo setCount(int count) {
         this.count = count;
+        return this;
     }
 
     public double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public GoodsInfo setPrice(double price) {
         this.price = price;
+        return this;
     }
 
     public int getPosition() {
         return position;
     }
 
-    public void setPosition(int position) {
+    public GoodsInfo setPosition(int position) {
         this.position = position;
+        return this;
     }
 
 }

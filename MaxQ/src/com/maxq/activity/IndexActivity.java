@@ -130,6 +130,7 @@ public class IndexActivity extends ActivityGroup implements RadioGroup.OnChecked
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
 			if (indexLoaction != R.id.index_activity_home) {
+				homeRb.setChecked(true);
 				indexLoaction=R.id.index_activity_home;
 				index_containerBody.removeAllViews();
 				index_containerBody.addView(getLocalActivityManager()

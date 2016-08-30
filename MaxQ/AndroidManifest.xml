@@ -65,7 +65,12 @@
         <activity android:name="com.maxq.activity.ShopcartActivity"
              android:theme="@style/customTheme"
             android:launchMode="singleTop" ></activity>
-		
+		<activity
+		    android:name="com.maxq.activity.SearchActivity"
+		    android:launchMode="singleTop"
+		    android:theme="@style/customTheme" >
+		</activity>
+
         <!-- service -->
         <service android:name="com.maxq.service.NetWorkService" >
         </service>

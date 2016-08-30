@@ -172,7 +172,7 @@ public class ShopcartActivity extends BaseActivity implements ShopcartAdapter.Ch
             List<GoodsInfo> products = new ArrayList<GoodsInfo>();
             for (int j = 0; j <= i; j++) {
                 int[] img = {R.drawable.goods1, R.drawable.goods2, R.drawable.goods3, R.drawable.goods4, R.drawable.goods5, R.drawable.goods6};
-                products.add(new GoodsInfo(j + "", "商品", groups.get(i)
+                products.add(new GoodsInfo(j,j + "", "商品", groups.get(i)
                         .getName() + "的第" + (j + 1) + "个商品", 12.00 + new Random().nextInt(23), new Random().nextInt(5) + 1, "豪华", "1", img[i * j], 6.00 + new Random().nextInt(13)));
             }
             children.put(groups.get(i).getId(), products);// 将组元素的一个唯一值，这里取Id，作为子元素List的Key

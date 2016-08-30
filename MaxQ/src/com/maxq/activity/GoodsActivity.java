@@ -17,6 +17,7 @@ import org.xutils.x;
 import org.xutils.image.ImageOptions;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -36,6 +37,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnGroupClickListener;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -65,6 +67,7 @@ public class GoodsActivity extends BaseActivity implements ScollToTop,OnPageLoad
 	PtrClassicFrameLayout mPtrClassicFrameLayout;
 	MyScrollView goodsexpandscrollview;
 	GoodsExpanableAdapter adapter;
+	ImageButton goods_expand_title_other;
 	private long mkeyTime;
 	 
 	@Override
@@ -118,6 +121,15 @@ public class GoodsActivity extends BaseActivity implements ScollToTop,OnPageLoad
 	int loadCount=0;
 	@SuppressLint("NewApi")
 	private void initViews() {
+		goods_expand_title_other=(ImageButton) findViewById(R.id.goods_expand_title_other);
+		goods_expand_title_other.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+			Intent intent=new Intent(GoodsActivity.this,SearchActivity.class);
+			startActivity(intent);
+			}
+		});
 		goodsexpandscrollview=(MyScrollView) findViewById(R.id.goods_expand_scrollview);
 		expandableListView = (MyExpandableListView) findViewById(R.id.myexpandalist);
 		expandableListView.setVisibility(View.GONE);
