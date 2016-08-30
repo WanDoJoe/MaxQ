@@ -1,6 +1,7 @@
 package com.maxq;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.view.WindowManager;
 import com.maxq.service.NetWorkService;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.utils.tools.DeviceUtil;
+import com.utils.widget.header.WindmillHeader;
 
 public abstract class BaseActivity extends Activity {
 	Intent netWorkIntent;
@@ -68,7 +70,10 @@ public abstract class BaseActivity extends Activity {
         }
         window.setAttributes(layoutParams);
     }
-
+	protected WindmillHeader getHeand(Context c){
+		WindmillHeader header = new WindmillHeader(c);// 自定义头部
+		return header;
+	}
 	/*@Override
 	public void setContentView(int layoutResID) {
 		View content = LayoutInflater.from(BaseActivity.this).inflate(

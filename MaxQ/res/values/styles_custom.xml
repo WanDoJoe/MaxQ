@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 用于添加第三方或者自定义style 避免污染主style -->
+    
+    <style name="searchRatingBar" parent="@android:style/Widget.RatingBar">
+		<item name="android:progressDrawable">@drawable/room_rating_bar</item>
+		<item name="android:minHeight">16dp</item>
+		<item name="android:maxHeight">16dp</item>
+	</style>
+    
+</resources>

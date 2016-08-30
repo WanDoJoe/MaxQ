@@ -28,7 +28,7 @@ public class NetWorkService extends Service {
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		Log.e(this.getClass().getSimpleName(), "onStartCommand");
 		if (!NetWorkUtil.isAvailable(this)) {
-			Toast.makeText(this, "没有网呀！亲", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "找个能上网的地儿！我等着你。", Toast.LENGTH_SHORT).show();
 		} else {
 			if (!NetWorkUtil.isWifiConnected(this)) {
 				

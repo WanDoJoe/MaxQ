@@ -26,6 +26,7 @@ import com.maxq.R;
 import com.maxq.adapter.ShopcartAdapter;
 import com.maxq.bean.GoodsInfo;
 import com.maxq.bean.StoreInfo;
+import com.utils.tools.DeviceUtil;
 
 
 /**

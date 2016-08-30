@@ -1,23 +1,49 @@
 package com.maxq.bean;
 
+import org.xutils.db.annotation.Column;
+import org.xutils.db.annotation.Table;
+
 /**
  * 商品信息
  */
+@Table(name="GoodsInfo")
 public class GoodsInfo {
+	@Column(name="GID",isId=true,autoGen=true,property = "NOT NULL")
+	private int gid;
+	@Column(name="ID",property = "NOT NULL")
     protected String Id;
+	@Column(name="NAME",property = "NOT NULL")
     protected String name;
+	@Column(name="ISCHOOSED",property = "NOT NULL")
     protected boolean isChoosed;
+	@Column(name="IMAGEURL",property = "NOT NULL")
     private String imageUrl;
+	@Column(name="DESC",property = "NOT NULL")
     private String desc;
+	@Column(name="PRICE",property = "NOT NULL")
     private double price;
+	@Column(name="COUNT",property = "NOT NULL")
     private int count;
+	@Column(name="POSITION",property = "NOT NULL")
     private int position;// 绝对位置，只在ListView构造的购物车中，在删除时有效
+	@Column(name="COLOR",property = "NOT NULL")
     private String color;
+	@Column(name="SIZE",property = "NOT NULL")
     private String size;
+	@Column(name="GOODSIMG",property = "NOT NULL")
     private int goodsImg;
+	@Column(name="DISCOUNTPRICE",property = "NOT NULL")
     private double discountPrice;
 
-    public double getDiscountPrice() {
+    public int getGid() {
+		return gid;
+	}
+
+	public void setGid(int gid) {
+		this.gid = gid;
+	}
+
+	public double getDiscountPrice() {
         return discountPrice;
     }
 

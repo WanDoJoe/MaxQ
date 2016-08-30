@@ -1,39 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/product_expand_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-     android:id="@+id/product_expand_layout"
     android:orientation="vertical" >
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <RelativeLayout
+        android:layout_width="fill_parent"
         android:layout_height="48dp"
         android:background="@color/actionbarandstatusbar"
         android:orientation="horizontal"
         android:paddingLeft="8dp"
         android:paddingRight="8dp" >
 
-        <Button
-            android:id="@+id/product_expand_title_icon"
-            android:layout_width="44dp"
-            android:layout_height="44dp"
+        <ImageView
+            android:id="@+id/product_expand_back_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
             android:layout_gravity="center_vertical"
-            android:background="@drawable/def_image" />
+            android:padding="12dp"
+            android:src="@drawable/topbar_up"
+            android:visibility="gone" />
 
-    </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="分类"
+            android:textSize="@dimen/txt_18" />
+    </RelativeLayout>
 
     <in.srain.cube.views.ptr.PtrClassicFrameLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/product_layout_pullrefresh_ptr"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-
-        <ExpandableListView
-            android:id="@+id/product_layout_pullrefresh_exlistv"
-            android:layout_width="match_parent"
-            android:groupIndicator="@null" 
-            android:layout_height="match_parent" >
-        </ExpandableListView>
+        android:layout_height="match_parent"
+        android:visibility="gone" >
     </in.srain.cube.views.ptr.PtrClassicFrameLayout>
+
+    <ExpandableListView
+        android:id="@+id/product_layout_pullrefresh_exlistv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:groupIndicator="@null"
+        android:visibility="gone" >
+    </ExpandableListView>
+
+    <GridView
+        android:id="@+id/product_layout_pullrefresh_listv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:numColumns="1" >
+    </GridView>
 
 </LinearLayout>

@@ -5,6 +5,7 @@ import android.app.KeyguardManager;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
@@ -24,6 +25,19 @@ import android.view.WindowManager.LayoutParams;
  * @UpdateLog
  */
 public class DeviceUtil {
+	/**
+	 * 设置button上下左右图标大小
+	 * @param context
+	 * @param resDrawable
+	 * @param widthDp
+	 * @param heightDp
+	 * @return
+	 */
+	public static Drawable setCompoundDrawables(Context context,int resDrawable,int widthDp,int heightDp){
+		Drawable drawable = context.getResources().getDrawable(resDrawable);
+		drawable.setBounds(0, 0, DeviceUtil.dp2px(context, widthDp),DeviceUtil.dp2px(context, heightDp));
+		return drawable;
+	}
 	/**
 	* 获取设备厂商，如Xiaomi
 	*/

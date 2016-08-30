@@ -4,9 +4,8 @@ import in.srain.cube.views.ptr.PtrClassicFrameLayout;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrDefaultHandler2;
 import in.srain.cube.views.ptr.PtrFrameLayout;
-import in.srain.cube.views.ptr.PtrHandler2;
 import in.srain.cube.views.ptr.PtrFrameLayout.Mode;
-import in.srain.cube.views.ptr.PtrHandler;
+import in.srain.cube.views.ptr.PtrHandler2;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +16,7 @@ import java.util.concurrent.TimeUnit;
 import org.xutils.x;
 import org.xutils.image.ImageOptions;
 
-import android.os.Build;
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -27,14 +26,12 @@ import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
 import android.view.ViewParent;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ExpandableListView;
@@ -49,11 +46,8 @@ import com.maxq.R;
 import com.maxq.adapter.GoodsExpanableAdapter;
 import com.maxq.bean.GoodsBean;
 import com.maxq.bean.ImageBean;
-import com.readystatesoftware.systembartint.SystemBarTintManager;
-import com.readystatesoftware.systembartint.SystemBarTintManager.SystemBarConfig;
 import com.utils.adapterutils.CommonAdapter;
 import com.utils.adapterutils.ViewHolder;
-import com.utils.tools.DeviceUtil;
 import com.utils.widget.MyExpandableListView;
 import com.utils.widget.MyExpandableListView.OnPageLoadListener;
 import com.utils.widget.MyGridView;
@@ -71,6 +65,8 @@ public class GoodsActivity extends BaseActivity implements ScollToTop,OnPageLoad
 	PtrClassicFrameLayout mPtrClassicFrameLayout;
 	MyScrollView goodsexpandscrollview;
 	GoodsExpanableAdapter adapter;
+	private long mkeyTime;
+	 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -80,20 +76,6 @@ public class GoodsActivity extends BaseActivity implements ScollToTop,OnPageLoad
 		initViews();
 		setHeader();
 		statusBar(findViewById(R.id.goods_expand_layout));
-//		 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-//	            setTranslucentStatus(true);
-//	        
-//
-////	        SystemBarTintManager tintManager = new SystemBarTintManager(this);
-////	        tintManager.setStatusBarTintEnabled(true);
-////	        tintManager.setStatusBarTintResource(R.color.actionbar_bg_transparent);
-//	        setTranslucentStatus(true);
-//	        SystemBarTintManager tintManager = new SystemBarTintManager(this);
-//	        tintManager.setStatusBarTintEnabled(true);
-//	        tintManager.setStatusBarTintResource(R.color.actionbarandstatusbar);
-////	        SystemBarConfig config = tintManager.getConfig();
-//	        findViewById(R.id.goods_expand_layout).setPadding(0,DeviceUtil.getStatusBarHeight(this), 0,0);
-//		  }
 	}
 
 
@@ -134,6 +116,7 @@ public class GoodsActivity extends BaseActivity implements ScollToTop,OnPageLoad
 	boolean isLoadMores=false;//显示第一行解决焦点冲突；
 	int maxCount=0;
 	int loadCount=0;
+	@SuppressLint("NewApi")
 	private void initViews() {
 		goodsexpandscrollview=(MyScrollView) findViewById(R.id.goods_expand_scrollview);
 		expandableListView = (MyExpandableListView) findViewById(R.id.myexpandalist);
@@ -202,12 +185,13 @@ public class GoodsActivity extends BaseActivity implements ScollToTop,OnPageLoad
 				 new Handler().postDelayed(new Runnable() {
 	                   @Override
 	                   public void run() {
-	                	   mPtrClassicFrameLayout.refreshComplete();
+	                	  
 						expandableListView.setVisibility(View.VISIBLE);
 						if(isLoadMores){
-						expandableListView.setSelectedGroup(2);
+						expandableListView.setSelectedGroup(1);
 						isLoadMores=false;
 						}
+						mPtrClassicFrameLayout.refreshComplete();
 //						goodsexpandscrollview.scrollTo(0, expandableListView.getMeasuredHeight() - expandableListView.getHeight());  
 						
 	                   }
@@ -227,27 +211,6 @@ public class GoodsActivity extends BaseActivity implements ScollToTop,OnPageLoad
 			}
 		});
 		
-//		mPtrClassicFrameLayout.setPtrHandler(new PtrHandler() {
-//			@Override
-//            public void onRefreshBegin(final PtrFrameLayout frame) {
-//                new Handler().postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-////                        ImageLoader.getInstance().
-////                        displayImage(Constants.VERTICAL_IMAGE_URLS[ptrTimes % Constants.VERTICAL_IMAGE_URLS.length], 
-////                        		ivImage, listener);
-//                    	mPtrClassicFrameLayout.refreshComplete();
-//                    }
-//                },2000);
-//
-//            }
-//			@Override
-//			public boolean checkCanDoRefresh(PtrFrameLayout frame, View content,
-//					View header) {
-//				return isTop;
-//				
-//			}
-//		});
 	}
 
 	//TODO goodsHeader
@@ -369,9 +332,9 @@ public class GoodsActivity extends BaseActivity implements ScollToTop,OnPageLoad
 //			imageView.setLayoutParams(new LayoutParams(20, 20));
 			imageView.setPadding(0, 0, 10, 0);
 			if(i==0){
-				imageView.setBackground(getResources().getDrawable(R.drawable.round_icon_light));
+				imageView.setBackgroundDrawable(getResources().getDrawable(R.drawable.round_icon_light));
 			}else{
-				imageView.setBackground(getResources().getDrawable(R.drawable.round_icon_gray));
+				imageView.setBackgroundDrawable(getResources().getDrawable(R.drawable.round_icon_gray));
 			}
 			indicator_imgs[i]=imageView;
 			layout.addView(imageView,params_linear);
@@ -469,7 +432,23 @@ public class GoodsActivity extends BaseActivity implements ScollToTop,OnPageLoad
 	public void update() {
 		
 	}
-
+	
+	@Override
+	 public boolean onKeyDown(int keyCode, KeyEvent event) {
+	  // TODO Auto-generated method stub
+	    if(keyCode == KeyEvent.KEYCODE_BACK){
+	           if((System.currentTimeMillis() - mkeyTime) > 2000){
+	           mkeyTime = System.currentTimeMillis();
+	           Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+	   }else{
+	           finish();
+	   }
+	   
+	   return true;
+	  }
+	  
+	  return super.onKeyDown(keyCode, event);
+	 }
 //	public void setTranslucentStatus(boolean b) {
 //        Window window = getWindow();
 //        WindowManager.LayoutParams layoutParams = window.getAttributes();
