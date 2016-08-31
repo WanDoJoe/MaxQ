@@ -27,15 +27,15 @@ public class NetWorkService extends Service {
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		Log.e(this.getClass().getSimpleName(), "onStartCommand");
-		if (!NetWorkUtil.isAvailable(this)) {
-			Toast.makeText(this, "找个能上网的地儿！我等着你。", Toast.LENGTH_SHORT).show();
-		} else {
-			if (!NetWorkUtil.isWifiConnected(this)) {
-				
-			}else{
-//				Toast.makeText(this, "当前网络为WIFI模式下", Toast.LENGTH_SHORT).show();
-			}
-		}
+//		if (!NetWorkUtil.isAvailable(this)) {
+//			Toast.makeText(this, "找个能上网的地儿！我等着你。", Toast.LENGTH_SHORT).show();
+//		} else {
+//			if (!NetWorkUtil.isWifiConnected(this)) {
+//				
+//			}else{
+////				Toast.makeText(this, "当前网络为WIFI模式下", Toast.LENGTH_SHORT).show();
+//			}
+//		}
 
 		return START_STICKY;
 	}

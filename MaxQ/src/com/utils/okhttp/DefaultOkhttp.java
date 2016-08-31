@@ -91,7 +91,7 @@ public class DefaultOkhttp extends OkHttpClient{
 	 * @param fileParams
 	 * @return
 	 */
-	private RequestBody SetFileRequestBody(Map<String, String> BodyParams,Map<String, String> fileParams){  
+	public RequestBody SetFileRequestBody(Map<String, String> BodyParams,Map<String, String> fileParams){  
         //带文件的Post参数  
         RequestBody body=null;  
         okhttp3.MultipartBody.Builder MultipartBodyBuilder=new okhttp3.MultipartBody.Builder();  

@@ -74,6 +74,7 @@
         <!-- service -->
         <service android:name="com.maxq.service.NetWorkService" >
         </service>
+        <receiver android:name="com.maxq.receive.NetWorkReceive"></receiver>
     </application>
 
 </manifest>

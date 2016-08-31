@@ -14,5 +14,9 @@
     <string name="pull_to_refresh_footer_release_label">松开后加载</string>
     <string name="pull_to_refresh_footer_pull_label">上拉加载更多</string>
     <string name="pull_to_refresh_footer_refreshing_label">加载中\u2026</string>
+    
+    
+    
+    <string name="search_title">商品列表</string>
 
 </resources>

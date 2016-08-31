@@ -3,12 +3,15 @@ package com.maxq;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.maxq.receive.NetWorkReceive;
 import com.maxq.service.NetWorkService;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.utils.tools.DeviceUtil;
@@ -16,6 +19,7 @@ import com.utils.widget.header.WindmillHeader;
 
 public abstract class BaseActivity extends Activity {
 	Intent netWorkIntent;
+	NetWorkReceive myReceiver;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +27,7 @@ public abstract class BaseActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		netWorkIntent = new Intent(this, NetWorkService.class);
 		startService(netWorkIntent);
+		registerReceiver();
 	}
 	protected void statusBar(View actionBar) {
 		 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -73,6 +78,21 @@ public abstract class BaseActivity extends Activity {
 	protected WindmillHeader getHeand(Context c){
 		WindmillHeader header = new WindmillHeader(c);// 自定义头部
 		return header;
+	}
+	private  void registerReceiver(){
+        IntentFilter filter=new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        myReceiver = new NetWorkReceive();
+        this.registerReceiver(myReceiver, filter);
+    }
+	private  void unregisterReceiver(){
+        this.unregisterReceiver(myReceiver);
+    }
+	
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		unregisterReceiver();
 	}
 	/*@Override
 	public void setContentView(int layoutResID) {

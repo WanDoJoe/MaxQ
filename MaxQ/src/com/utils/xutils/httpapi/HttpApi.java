@@ -1,8 +1,16 @@
 package com.utils.xutils.httpapi;
 
+import java.io.File;
+
 import org.xutils.x;
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
+
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.widget.Toast;
+
+import com.maxq.MainActivity;
 
 
 /**
@@ -40,5 +48,52 @@ public class HttpApi<T> {
         x.http().get(params,de);
     }
 
+    
+    private static void downloadFiel(final Context mcContext,String url,String path){
+//    	 progressDialog = new ProgressDialog(this);  
+         RequestParams requestParams = new RequestParams(url);  
+         requestParams.setSaveFilePath(path);  
+         x.http().get(requestParams, new Callback.ProgressCallback<File>() {  
+             @Override  
+             public void onWaiting() {  
+             }  
+   
+             @Override  
+             public void onStarted() {  
+             }  
+   
+             @Override  
+             public void onLoading(long total, long current, boolean isDownloading) {  
+//                 progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);  
+//                 progressDialog.setMessage("亲，努力下载中。。。");  
+//                 progressDialog.show();  
+//                 progressDialog.setMax((int) total);  
+//                 progressDialog.setProgress((int) current);  
+             }  
+   
+             @Override  
+             public void onSuccess(File result) {  
+                 Toast.makeText(mcContext, "下载成功", Toast.LENGTH_SHORT).show();  
+//                 progressDialog.dismiss();  
+             }  
+   
+             @Override  
+             public void onError(Throwable ex, boolean isOnCallback) {  
+                 ex.printStackTrace();  
+                 Toast.makeText(mcContext, "下载失败，请检查网络和SD卡", Toast.LENGTH_SHORT).show();  
+//                 progressDialog.dismiss();  
+             }  
+   
+             @Override  
+             public void onCancelled(CancelledException cex) {  
+            	 Toast.makeText(mcContext, cex+",错误", Toast.LENGTH_SHORT).show();  
+             }  
+   
+             @Override  
+             public void onFinished() {  
+            	 
+             }  
+         });  
+    }
 
 }
