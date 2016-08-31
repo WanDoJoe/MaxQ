@@ -237,5 +237,5 @@ public abstract class BaseActivity extends Activity {
 		 *//*
 		void onLoadingMore();
 	}*/
-
+	
 }
