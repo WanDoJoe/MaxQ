@@ -169,6 +169,7 @@ public class GoodsActivity extends BaseActivity implements ScollToTop,OnPageLoad
 		mPtrClassicFrameLayout=(PtrClassicFrameLayout) findViewById(R.id.goods_expand_ptrRefresh_fl);
 		mPtrClassicFrameLayout.setPullToRefresh(false);//true自动刷新
 		mPtrClassicFrameLayout.setMode(Mode.BOTH);
+		mPtrClassicFrameLayout.setLoadingMinTime(1);
 		final WindmillHeader header = new WindmillHeader(this);// 自定义头部
 		mPtrClassicFrameLayout.setHeaderView(header);
 		mPtrClassicFrameLayout.addPtrUIHandler(header);
@@ -194,10 +195,10 @@ public class GoodsActivity extends BaseActivity implements ScollToTop,OnPageLoad
 			
 			@Override
 			public void onLoadMoreBegin(PtrFrameLayout frame) {
-				 new Handler().postDelayed(new Runnable() {
-	                   @Override
-	                   public void run() {
-	                	  
+//				 new Handler().postDelayed(new Runnable() {
+//	                   @Override
+//	                   public void run() {
+//	                	  
 						expandableListView.setVisibility(View.VISIBLE);
 						if(isLoadMores){
 						expandableListView.setSelectedGroup(1);
@@ -206,8 +207,8 @@ public class GoodsActivity extends BaseActivity implements ScollToTop,OnPageLoad
 						mPtrClassicFrameLayout.refreshComplete();
 //						goodsexpandscrollview.scrollTo(0, expandableListView.getMeasuredHeight() - expandableListView.getHeight());  
 						
-	                   }
-	               },2000);
+//	                   }
+//	               },100);
 			}
 			
 			@Override

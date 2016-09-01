@@ -3,8 +3,10 @@
     package="com.maxq"
     android:versionCode="1"
     android:versionName="1.0" >
-    <uses-sdk android:minSdkVersion="10" 
-        android:targetSdkVersion="20"/>
+
+    <uses-sdk
+        android:minSdkVersion="10"
+        android:targetSdkVersion="20" />
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -28,53 +30,67 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme"
-         >
-        <activity android:name="com.maxq.activity.IndexActivity" 
-            android:launchMode="singleTop">
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="com.maxq.activity.IndexActivity"
+             android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.maxq.BaseActivity"
-            android:launchMode="singleTop" 
-            android:theme="@style/AppTheme">
-        </activity>
-        <activity android:name="com.maxq.activity.LoginActivity" 
+        <activity
+            android:name="com.maxq.BaseActivity"
             android:launchMode="singleTop"
-            android:theme="@style/AppTheme">
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" >
+        </activity>
+        <activity
+            android:name="com.maxq.activity.LoginActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" >
         </activity>
         <activity
             android:name="com.maxq.activity.GoodsActivity"
-             android:theme="@style/AppTheme"
-             android:launchMode="singleTop"
-             >
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" >
         </activity>
         <activity
             android:name="com.maxq.activity.ProductActivity"
-             android:theme="@style/AppTheme"
-             android:launchMode="singleTop">
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" >
         </activity>
         <activity
             android:name="com.maxq.activity.HomePageActivity"
-            android:theme="@style/customTheme"
-            android:launchMode="singleTop" >
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/customTheme" >
         </activity>
-        <activity android:name="com.maxq.activity.ShopcartActivity"
-             android:theme="@style/customTheme"
-            android:launchMode="singleTop" ></activity>
-		<activity
-		    android:name="com.maxq.activity.SearchActivity"
-		    android:launchMode="singleTop"
-		    android:theme="@style/customTheme" >
-		</activity>
+        <activity
+            android:name="com.maxq.activity.ShopcartActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/customTheme" >
+        </activity>
+        <activity
+            android:name="com.maxq.activity.SearchActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/customTheme" >
+        </activity>
 
         <!-- service -->
         <service android:name="com.maxq.service.NetWorkService" >
         </service>
-        <receiver android:name="com.maxq.receive.NetWorkReceive"></receiver>
+
+        <receiver android:name="com.maxq.receive.NetWorkReceive" >
+        </receiver>
     </application>
 
 </manifest>

@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 
-import org.apache.http.util.EncodingUtils;
 
 import android.content.Context;
 import android.os.Environment;
@@ -75,7 +74,8 @@ public class SDCardUtil {
 			byte[] buffer = new byte[lenght];
 			// 将文件中的数据读到byte数组中
 			in.read(buffer);
-			data = EncodingUtils.getString(buffer, "utf-8");
+//			data = EncodingUtils.getString(buffer, "utf-8");
+			data=new String(buffer, "utf-8");
 			return data;
 		} catch (Exception e) {
 			return e.toString();
