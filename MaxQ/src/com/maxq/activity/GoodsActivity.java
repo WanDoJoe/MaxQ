@@ -2,10 +2,9 @@ package com.maxq.activity;
 
 import in.srain.cube.views.ptr.PtrClassicFrameLayout;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
-import in.srain.cube.views.ptr.PtrDefaultHandler2;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 import in.srain.cube.views.ptr.PtrFrameLayout.Mode;
-import in.srain.cube.views.ptr.PtrHandler2;
+import in.srain.cube.views.ptr.PtrHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +39,7 @@ import android.widget.ExpandableListView.OnGroupClickListener;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -54,6 +54,7 @@ import com.utils.widget.MyExpandableListView;
 import com.utils.widget.MyExpandableListView.OnPageLoadListener;
 import com.utils.widget.MyGridView;
 import com.utils.widget.MyScrollView;
+import com.utils.widget.MyScrollView.OnScrollToBottomListener;
 import com.utils.widget.head.ScollToTop;
 import com.utils.widget.header.WindmillHeader;
 /**
@@ -67,7 +68,13 @@ public class GoodsActivity extends BaseActivity implements ScollToTop,OnPageLoad
 	PtrClassicFrameLayout mPtrClassicFrameLayout;
 	MyScrollView goodsexpandscrollview;
 	GoodsExpanableAdapter adapter;
-	ImageButton goods_expand_title_other;
+	ImageButton goods_expand_title_other,scrollTopIb;
+	MyExpandableListView expandableListView;
+	
+	boolean isLoadMores=false;//显示第一行解决焦点冲突；
+	boolean isBottomShow=false;
+	int maxCount=0;
+	int loadCount=0;
 	private long mkeyTime;
 	 
 	@Override
@@ -77,8 +84,141 @@ public class GoodsActivity extends BaseActivity implements ScollToTop,OnPageLoad
 		setContentView(R.layout.goods_expand_layout);
 		setdata();
 		initViews();
+		setLisens();
 		setHeader();
 		statusBar(findViewById(R.id.goods_expand_layout));
+	}
+
+
+	@SuppressLint("NewApi")
+	private void setLisens() {
+		scrollTopIb.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				goodsexpandscrollview.scrollTo(0, 0);
+				scrollTopIb.setVisibility(View.GONE);
+			}
+		});
+		goods_expand_title_other.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				Intent intent = new Intent(GoodsActivity.this,
+						SearchActivity.class);
+				startActivity(intent);
+			}
+		});
+
+		
+		expandableListView.setVisibility(View.GONE);
+		expandableListView.setOnPageLoadListener(this);
+		expandableListView.setFriction(ViewConfiguration.getScrollFriction()*8);
+		// myadapter adapter=new myadapter(beans, this);
+		adapter = new GoodsExpanableAdapter(this, beans);
+		expandableListView.setAdapter(adapter);
+		if (adapter.getGroupCount() > 0) {
+			maxCount=adapter.getGroupCount();
+			
+			for (int i = 0; i < adapter.getGroupCount(); i++) {
+				expandableListView.expandGroup(i);
+			}
+		}
+		expandableListView.setOnGroupClickListener(new OnGroupClickListener() {
+
+			@Override
+			public boolean onGroupClick(ExpandableListView arg0, View arg1,
+					int arg2, long arg3) {
+				return false;
+			}
+		});
+		goodsexpandscrollview.setOnScrollToBottomLintener(new OnScrollToBottomListener() {
+			
+			@Override
+			public void onScrollBottomListener(boolean isBottom) {
+				expandableListView.setVisibility(View.VISIBLE);	
+				if(!isBottomShow){
+				scrollTopIb.setVisibility(View.VISIBLE);
+				isBottomShow=true;
+				}
+			}
+		});
+		goodsexpandscrollview.setOnScrollListener(new com.utils.widget.MyScrollView.OnScrollListener() {
+			
+			@Override
+			public void onScroll(int scrollY) {
+				System.out.println(scrollY);
+//				if(goodsexpandscrollview.isScrolledToTop()){
+//					scrollTopIb.setVisibility(View.GONE);
+//				}else{
+//					scrollTopIb.setVisibility(View.VISIBLE);
+//				}
+				
+				if(scrollY<200){
+					isTop=true;
+					scrollTopIb.setVisibility(View.GONE);
+				}else{
+					scrollTopIb.setVisibility(View.VISIBLE);
+//					isTop=false;
+				}
+			}
+		});
+		mPtrClassicFrameLayout.setPullToRefresh(false);//true自动刷新
+		mPtrClassicFrameLayout.setMode(Mode.BOTH);
+		mPtrClassicFrameLayout.setLoadingMinTime(1);
+		final WindmillHeader header = new WindmillHeader(this);// 自定义头部
+		mPtrClassicFrameLayout.setHeaderView(header);
+		mPtrClassicFrameLayout.addPtrUIHandler(header);
+		
+		mPtrClassicFrameLayout.setPtrHandler(new PtrHandler() {
+			
+			@Override
+			public void onRefreshBegin(PtrFrameLayout frame) {
+				 new Handler().postDelayed(new Runnable() {
+                   @Override
+                   public void run() {
+                   	mPtrClassicFrameLayout.refreshComplete();
+                   }
+               },2000);
+			}
+			
+			@Override
+			public boolean checkCanDoRefresh(PtrFrameLayout frame, View content,
+					View header) {
+//				frame.
+				return  PtrDefaultHandler.checkContentCanBePulledDown(frame, content, header);
+			}
+//			
+//			@Override
+//			public void onLoadMoreBegin(PtrFrameLayout frame) {
+////				 new Handler().postDelayed(new Runnable() {
+////	                   @Override
+////	                   public void run() {
+////	                	  
+//						expandableListView.setVisibility(View.VISIBLE);
+//						if(isLoadMores){
+//						expandableListView.setSelectedGroup(1);
+//						isLoadMores=false;
+//						}
+//						mPtrClassicFrameLayout.refreshComplete();
+////						goodsexpandscrollview.scrollTo(0, expandableListView.getMeasuredHeight() - expandableListView.getHeight());  
+//						
+////	                   }
+//	               },100);
+//			}
+//			
+//			@Override
+//			public boolean checkCanDoLoadMore(PtrFrameLayout frame, View content,
+//					View footer) {
+//					
+//				isLoadMore=PtrDefaultHandler2.checkContentCanBePulledUp(frame, content, footer);
+////				if(isLoadMore){
+////					mPtrClassicFrameLayout.autoLoadMore(false);
+////				}
+////				isLoadMores=true;
+//				return  isLoadMore;
+//			}
+		});
+		
 	}
 
 
@@ -115,115 +255,14 @@ public class GoodsActivity extends BaseActivity implements ScollToTop,OnPageLoad
 		}
 	}
 
-	MyExpandableListView expandableListView;
-	boolean isLoadMores=false;//显示第一行解决焦点冲突；
-	int maxCount=0;
-	int loadCount=0;
+	
 	@SuppressLint("NewApi")
 	private void initViews() {
+		scrollTopIb=(ImageButton) findViewById(R.id.scroll_Top_Ib);
 		goods_expand_title_other=(ImageButton) findViewById(R.id.goods_expand_title_other);
-		goods_expand_title_other.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View arg0) {
-			Intent intent=new Intent(GoodsActivity.this,SearchActivity.class);
-			startActivity(intent);
-			}
-		});
 		goodsexpandscrollview=(MyScrollView) findViewById(R.id.goods_expand_scrollview);
 		expandableListView = (MyExpandableListView) findViewById(R.id.myexpandalist);
-		expandableListView.setVisibility(View.GONE);
-		expandableListView.setOnPageLoadListener(this);
-		
-		expandableListView.setFriction(ViewConfiguration.getScrollFriction()*5);
-		// myadapter adapter=new myadapter(beans, this);
-		adapter = new GoodsExpanableAdapter(this, beans);
-		expandableListView.setAdapter(adapter);
-		if (adapter.getGroupCount() > 0) {
-			maxCount=adapter.getGroupCount();
-			
-			for (int i = 0; i < adapter.getGroupCount(); i++) {
-				expandableListView.expandGroup(i);
-			}
-		}
-		expandableListView.setOnGroupClickListener(new OnGroupClickListener() {
-
-			@Override
-			public boolean onGroupClick(ExpandableListView arg0, View arg1,
-					int arg2, long arg3) {
-				return false;
-			}
-		});
-		goodsexpandscrollview.setOnScrollListener(new com.utils.widget.MyScrollView.OnScrollListener() {
-			
-			@Override
-			public void onScroll(int scrollY) {
-				if(scrollY==0){
-					isTop=true;
-				}else{
-					isTop=false;
-				}
-			}
-		});
-		
 		mPtrClassicFrameLayout=(PtrClassicFrameLayout) findViewById(R.id.goods_expand_ptrRefresh_fl);
-		mPtrClassicFrameLayout.setPullToRefresh(false);//true自动刷新
-		mPtrClassicFrameLayout.setMode(Mode.BOTH);
-		mPtrClassicFrameLayout.setLoadingMinTime(1);
-		final WindmillHeader header = new WindmillHeader(this);// 自定义头部
-		mPtrClassicFrameLayout.setHeaderView(header);
-		mPtrClassicFrameLayout.addPtrUIHandler(header);
-		
-		mPtrClassicFrameLayout.setPtrHandler(new PtrHandler2() {
-			
-			@Override
-			public void onRefreshBegin(PtrFrameLayout frame) {
-				 new Handler().postDelayed(new Runnable() {
-                   @Override
-                   public void run() {
-                   	mPtrClassicFrameLayout.refreshComplete();
-                   }
-               },2000);
-			}
-			
-			@Override
-			public boolean checkCanDoRefresh(PtrFrameLayout frame, View content,
-					View header) {
-//				frame.
-				return  PtrDefaultHandler.checkContentCanBePulledDown(frame, content, header);
-			}
-			
-			@Override
-			public void onLoadMoreBegin(PtrFrameLayout frame) {
-//				 new Handler().postDelayed(new Runnable() {
-//	                   @Override
-//	                   public void run() {
-//	                	  
-						expandableListView.setVisibility(View.VISIBLE);
-						if(isLoadMores){
-						expandableListView.setSelectedGroup(1);
-						isLoadMores=false;
-						}
-						mPtrClassicFrameLayout.refreshComplete();
-//						goodsexpandscrollview.scrollTo(0, expandableListView.getMeasuredHeight() - expandableListView.getHeight());  
-						
-//	                   }
-//	               },100);
-			}
-			
-			@Override
-			public boolean checkCanDoLoadMore(PtrFrameLayout frame, View content,
-					View footer) {
-					
-				isLoadMore=PtrDefaultHandler2.checkContentCanBePulledUp(frame, content, footer);
-//				if(isLoadMore){
-//					mPtrClassicFrameLayout.autoLoadMore(false);
-//				}
-//				isLoadMores=true;
-				return  isLoadMore;
-			}
-		});
-		
 	}
 
 	//TODO goodsHeader

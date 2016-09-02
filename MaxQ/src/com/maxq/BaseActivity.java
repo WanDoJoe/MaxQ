@@ -2,12 +2,15 @@ package com.maxq;
 
 import java.io.File;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.net.ConnectivityManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,6 +20,7 @@ import android.view.WindowManager;
 
 import com.maxq.receive.NetWorkReceive;
 import com.maxq.service.NetWorkService;
+import com.maxq.utils.CostomValue;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.utils.tools.AppUtils;
 import com.utils.tools.DeviceUtil;
@@ -24,10 +28,11 @@ import com.utils.tools.SDCardUtil;
 import com.utils.widget.header.WindmillHeader;
 import com.utils.xutils.httpapi.HttpApi;
 
+@SuppressLint("CommitPrefEdits")
 public abstract class BaseActivity extends Activity {
 	Intent netWorkIntent;
 	NetWorkReceive myReceiver;
-
+	SharedPreferences preferences;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -35,6 +40,20 @@ public abstract class BaseActivity extends Activity {
 		netWorkIntent = new Intent(this, NetWorkService.class);
 		startService(netWorkIntent);
 		registerReceiver();
+		
+	}
+	
+	protected SharedPreferences getSP(){
+		preferences=getSharedPreferences(CostomValue.SP_NAME, MODE_PRIVATE);
+		return preferences;
+		
+	}
+	
+	protected Editor getEditor() {
+		
+		Editor e= getSP().edit();
+		return e;
+		
 	}
 	protected void statusBar(View actionBar) {
 		 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {

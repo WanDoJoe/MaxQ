@@ -37,6 +37,7 @@ public class ProductActivity extends BaseActivity {
 	private ImageView backBn;
 	ProductAdapter adapter;
 	private boolean isScrollTOp = false;
+	private boolean isGroup=false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +61,11 @@ public class ProductActivity extends BaseActivity {
 			product_root.add(bean);
 		}
 		
+	}
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
 	}
 
 	private void initView() {
@@ -103,6 +109,7 @@ public class ProductActivity extends BaseActivity {
 					bean.setImageBeans(list);
 					product_group.add(bean);
 				}
+				isGroup=true;
 				expandableListView.setVisibility(View.VISIBLE);
 				adapter=new ProductAdapter(ProductActivity.this,product_group);
 				expandableListView.setAdapter(adapter);

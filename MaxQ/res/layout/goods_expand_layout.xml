@@ -26,161 +26,186 @@
         <EditText
             android:layout_width="220dp"
             android:layout_height="match_parent"
-            android:layout_gravity="center"
             android:layout_centerVertical="true"
-            android:layout_marginTop="6dp"
+            android:layout_gravity="center"
             android:layout_marginBottom="6dp"
-            android:gravity="center_vertical"
-            android:drawableLeft="@drawable/ic_launcher"
-            android:layout_toRightOf="@+id/goods_expand_title_icon"
+            android:layout_marginTop="6dp"
             android:layout_toLeftOf="@+id/goods_expand_title_other"
+            android:layout_toRightOf="@+id/goods_expand_title_icon"
             android:background="@drawable/serchbar_bg"
+            android:drawableLeft="@drawable/ic_launcher"
+            android:gravity="center_vertical"
             android:hint="搜索"
-            android:textColorHint="#6ac5c5c5" />
+            android:textColorHint="#cac5c5c5" />
 
         <ImageButton
-            android:layout_alignParentRight="true"
             android:id="@+id/goods_expand_title_other"
             android:layout_width="44dp"
-            android:layout_centerVertical="true"
-            android:layout_height="44dp" />
+            android:layout_height="44dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true" />
     </RelativeLayout>
 
-    <in.srain.cube.views.ptr.PtrClassicFrameLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/goods_expand_ptrRefresh_fl"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:focusableInTouchMode="true" >
+        android:layout_height="match_parent" >
 
-        <com.utils.widget.MyScrollView
-            android:id="@+id/goods_expand_scrollview"
+        <in.srain.cube.views.ptr.PtrClassicFrameLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/goods_expand_ptrRefresh_fl"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical" >
+            android:focusableInTouchMode="true" >
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <com.utils.widget.MyScrollView
+                android:id="@+id/goods_expand_scrollview"
+                android:layout_width="match_parent"
+                android:scrollbars="@null"
+                android:layout_height="match_parent"
                 android:orientation="vertical" >
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical" >
-
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="160dp" >
-
-                        <android.support.v4.view.ViewPager
-                            android:id="@+id/goods_header_viewpage"
-                            android:layout_width="match_parent"
-                            android:layout_height="160dp"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/tum" >
-                        </android.support.v4.view.ViewPager>
-
-                        <LinearLayout
-                            android:id="@+id/goods_header_viewpage_icon_ll"
-                            android:layout_width="match_parent"
-                            android:layout_height="24dp"
-                            android:layout_gravity="bottom"
-                            android:background="#0ccfcfcf"
-                            android:orientation="horizontal" >
-                        </LinearLayout>
-                    </FrameLayout>
-
-                    <com.utils.widget.MyGridView
-                        android:id="@+id/goods_header_girdview"
-                        android:layout_width="match_parent"
-                        android:layout_height="148dp"
-                        android:layout_marginBottom="2dp"
-                        android:layout_marginTop="2dp"
-                        android:background="#d4d4d4"
-                        android:numColumns="4" >
-                    </com.utils.widget.MyGridView>
+                    android:layout_height="wrap_content" >
 
                     <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="160dp"
-                        android:padding="1dp"
-                        android:background="@color/actionbarandstatusbar_gray50"
-                        android:orientation="horizontal" >
+                        android:id="@+id/goods_expand_viewpage_ll"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" >
 
-                        <ImageView
-                            android:id="@+id/goods_expand_layout_ll1_left"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="0.7"
-                            android:scaleType="fitXY"
-                            android:src="@drawable/goods1" />
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="160dp" >
 
-                        <View
-                            android:layout_width="1dp"
-                            android:layout_height="match_parent"
-                            android:background="@color/actionbarandstatusbar_gray50" />
+                            <android.support.v4.view.ViewPager
+                                android:id="@+id/goods_header_viewpage"
+                                android:layout_width="match_parent"
+                                android:layout_height="160dp"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/tum" >
+                            </android.support.v4.view.ViewPager>
+
+                            <LinearLayout
+                                android:id="@+id/goods_header_viewpage_icon_ll"
+                                android:layout_width="match_parent"
+                                android:layout_height="24dp"
+                                android:layout_gravity="bottom"
+                                android:background="#0ccfcfcf"
+                                android:orientation="horizontal" >
+                            </LinearLayout>
+                        </FrameLayout>
+
+                        <com.utils.widget.MyGridView
+                            android:id="@+id/goods_header_girdview"
+                            android:layout_width="match_parent"
+                            android:layout_height="148dp"
+                            android:layout_marginBottom="2dp"
+                            android:layout_marginTop="2dp"
+                            android:background="#d4d4d4"
+                            android:numColumns="4" >
+                        </com.utils.widget.MyGridView>
 
                         <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:orientation="vertical" >
+                            android:id="@+id/goods_expand_layout_ll1"
+                            android:layout_width="match_parent"
+                            android:layout_height="160dp"
+                            android:background="@color/actionbarandstatusbar_gray50"
+                            android:orientation="horizontal"
+                            android:padding="1dp" >
 
                             <ImageView
-                                android:id="@+id/goods_expand_layout_ll1_righttop1"
-                                android:layout_width="match_parent"
-                                android:layout_height="0dp"
-                                android:layout_weight="1"
+                                android:id="@+id/goods_expand_layout_ll1_left"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="0.7"
                                 android:scaleType="fitXY"
-                                android:src="@drawable/goods2" />
+                                android:src="@drawable/goods1" />
 
                             <View
-                                android:layout_width="match_parent"
-                                android:layout_height="1dp"
+                                android:layout_width="1dp"
+                                android:layout_height="match_parent"
                                 android:background="@color/actionbarandstatusbar_gray50" />
 
                             <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="0dp"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
                                 android:layout_weight="1"
-                                android:orientation="horizontal" >
+                                android:orientation="vertical" >
 
                                 <ImageView
-                                    android:id="@+id/goods_expand_layout_ll1_rightbottom1"
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
+                                    android:id="@+id/goods_expand_layout_ll1_righttop1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
                                     android:layout_weight="1"
                                     android:scaleType="fitXY"
-                                    android:src="@drawable/goods3" />
+                                    android:src="@drawable/goods2" />
 
                                 <View
-                                    android:layout_width="1dp"
-                                    android:layout_height="match_parent"
-                                    android:background="@color/actionbarandstatusbar_gray50"
-                                    android:visibility="gone" />
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    android:background="@color/actionbarandstatusbar_gray50" />
 
-                                <ImageView
-                                    android:id="@+id/goods_expand_layout_ll1_rightbottom2"
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
                                     android:layout_weight="1"
-                                    android:scaleType="fitXY"
-                                    android:src="@drawable/goods4"
-                                    android:visibility="gone" />
+                                    android:orientation="horizontal" >
+
+                                    <ImageView
+                                        android:id="@+id/goods_expand_layout_ll1_rightbottom1"
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1"
+                                        android:scaleType="fitXY"
+                                        android:src="@drawable/goods3" />
+
+                                    <View
+                                        android:layout_width="1dp"
+                                        android:layout_height="match_parent"
+                                        android:background="@color/actionbarandstatusbar_gray50"
+                                        android:visibility="gone" />
+
+                                    <ImageView
+                                        android:id="@+id/goods_expand_layout_ll1_rightbottom2"
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1"
+                                        android:scaleType="fitXY"
+                                        android:src="@drawable/goods4"
+                                        android:visibility="gone" />
+                                </LinearLayout>
                             </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
-                </LinearLayout>
 
-                <com.utils.widget.MyExpandableListView
-                    android:id="@+id/myexpandalist"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:groupIndicator="@null" >
-                </com.utils.widget.MyExpandableListView>
-            </LinearLayout>
-        </com.utils.widget.MyScrollView>
-    </in.srain.cube.views.ptr.PtrClassicFrameLayout>
+                    <com.utils.widget.MyExpandableListView
+                        android:id="@+id/myexpandalist"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/goods_expand_viewpage_ll"
+                        android:groupIndicator="@null" >
+                    </com.utils.widget.MyExpandableListView>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp" 
+                        android:layout_below="@+id/myexpandalist"
+                        android:orientation="horizontal">
+                    </LinearLayout>
+                </RelativeLayout>
+            </com.utils.widget.MyScrollView>
+        </in.srain.cube.views.ptr.PtrClassicFrameLayout>
+
+        <ImageButton
+            android:id="@+id/scroll_Top_Ib"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="right|bottom"
+            android:layout_marginBottom="8dp"
+            android:layout_marginRight="8dp"
+            android:background="@drawable/round_icon_gray"
+            android:visibility="gone" />
+    </FrameLayout>
 
 </LinearLayout>

@@ -73,13 +73,20 @@ public class ShopcartActivity extends BaseActivity implements ShopcartAdapter.Ch
     private List<StoreInfo> groups = new ArrayList<StoreInfo>();// 组元素数据列表
     private Map<String, List<GoodsInfo>> children = new HashMap<String, List<GoodsInfo>>();// 子元素数据列表
     private int flag = 0;
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.shopcar_layout);
         context = this;
+        if(getSP().getBoolean("isLogin", false)){
+        	Intent intent=new Intent(this,LoginActivity.class);
+        	intent.putExtra("backActivity", this.getClass().getName());
+        	startActivity(intent);
+        	finish();
+        }
+        
         initDatas();
         initViews();
 
@@ -168,7 +175,7 @@ public class ShopcartActivity extends BaseActivity implements ShopcartAdapter.Ch
      */
     private void initDatas() {
         for (int i = 0; i < 3; i++) {
-            groups.add(new StoreInfo(i + "", "天猫店铺" + (i + 1) + "号店"));
+            groups.add(new StoreInfo(i + "", "店铺" + (i + 1) + "号店"));
             List<GoodsInfo> products = new ArrayList<GoodsInfo>();
             for (int j = 0; j <= i; j++) {
                 int[] img = {R.drawable.goods1, R.drawable.goods2, R.drawable.goods3, R.drawable.goods4, R.drawable.goods5, R.drawable.goods6};

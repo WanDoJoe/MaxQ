@@ -5,6 +5,8 @@ package com.maxq.activity;
 import android.app.ActivityGroup;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -14,6 +16,7 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.maxq.R;
+import com.maxq.utils.CostomValue;
 import com.utils.tools.DeviceUtil;
 
 @SuppressWarnings("deprecation")
@@ -24,6 +27,7 @@ public class IndexActivity extends ActivityGroup implements RadioGroup.OnChecked
 	 LinearLayout  index_containerBody;
 	 Context context;
 	 int indexLoaction;
+	 SharedPreferences preferences;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -32,6 +36,10 @@ public class IndexActivity extends ActivityGroup implements RadioGroup.OnChecked
 		initView();
 		initLayout();
 		setRefresh();
+		preferences=getSharedPreferences(CostomValue.SP_NAME, MODE_PRIVATE);
+		Editor e=preferences.edit();
+		e.putBoolean("isLogin", false);
+		e.commit();
 		
 	}
 
