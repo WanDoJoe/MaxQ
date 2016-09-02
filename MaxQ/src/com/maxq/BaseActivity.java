@@ -1,7 +1,11 @@
 package com.maxq;
 
+import java.io.File;
+
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
@@ -14,8 +18,11 @@ import android.view.WindowManager;
 import com.maxq.receive.NetWorkReceive;
 import com.maxq.service.NetWorkService;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
+import com.utils.tools.AppUtils;
 import com.utils.tools.DeviceUtil;
+import com.utils.tools.SDCardUtil;
 import com.utils.widget.header.WindmillHeader;
+import com.utils.xutils.httpapi.HttpApi;
 
 public abstract class BaseActivity extends Activity {
 	Intent netWorkIntent;
@@ -45,6 +52,20 @@ public abstract class BaseActivity extends Activity {
 //	        findViewById(R.id.goods_expand_layout).setPadding(0,DeviceUtil.getStatusBarHeight(this), 0,0);
 	        actionBar.setPadding(0,DeviceUtil.getStatusBarHeight(this), 0,0);
 		  }
+//		 final String url="http://221.238.180.180:8082/Android/DatangMOA.apk";
+//		 new AlertDialog.Builder(this)
+//		 .setMessage("更新")
+//		 .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+//			
+//			@Override
+//			public void onClick(DialogInterface arg0, int arg1) {
+////				new HttpApi<File>();
+//				HttpApi.downloadFiel(BaseActivity.this, url,
+//						SDCardUtil.getSDCardPath()+"/MaxQ",
+//						url.split("/")[url.split("/").length-1]);
+//			}
+//		}).setNegativeButton("取消", null)
+//		.show();
 	}
 	protected void statusBar(View actionBar,int color) {
 		 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {

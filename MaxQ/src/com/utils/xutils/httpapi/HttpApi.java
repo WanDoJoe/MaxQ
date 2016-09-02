@@ -1,16 +1,17 @@
 package com.utils.xutils.httpapi;
 
 import java.io.File;
+import java.util.List;
 
 import org.xutils.x;
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 
-import android.app.ProgressDialog;
 import android.content.Context;
+import android.view.View;
 import android.widget.Toast;
 
-import com.maxq.MainActivity;
+import com.utils.tools.SDCardUtil;
 
 
 /**
@@ -49,10 +50,17 @@ public class HttpApi<T> {
     }
 
     
-    private static void downloadFiel(final Context mcContext,String url,String path){
-//    	 progressDialog = new ProgressDialog(this);  
-         RequestParams requestParams = new RequestParams(url);  
-         requestParams.setSaveFilePath(path);  
+    public static void downloadFiel(final Context mContext,String url,String path,String fileName){
+//    	 progressDialog = new ProgressDialog(this);
+    	if(!SDCardUtil.isSDCardEnable()){
+    		Toast.makeText(mContext, "SD卡不能使用，请检查", Toast.LENGTH_SHORT).show();
+    		return;
+    	}
+    	SDCardUtil.createDirectory(path);
+    		
+         RequestParams requestParams = new RequestParams(url); 
+         requestParams.setAutoRename(true);
+         requestParams.setSaveFilePath(path+"/download/"+fileName); 
          x.http().get(requestParams, new Callback.ProgressCallback<File>() {  
              @Override  
              public void onWaiting() {  
@@ -64,6 +72,8 @@ public class HttpApi<T> {
    
              @Override  
              public void onLoading(long total, long current, boolean isDownloading) {  
+            	 System.out.println(total+"="+current);
+            	 
 //                 progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);  
 //                 progressDialog.setMessage("亲，努力下载中。。。");  
 //                 progressDialog.show();  
@@ -73,20 +83,20 @@ public class HttpApi<T> {
    
              @Override  
              public void onSuccess(File result) {  
-                 Toast.makeText(mcContext, "下载成功", Toast.LENGTH_SHORT).show();  
+                 Toast.makeText(mContext, "下载成功"+ result.getName(), Toast.LENGTH_SHORT).show();  
 //                 progressDialog.dismiss();  
              }  
    
              @Override  
              public void onError(Throwable ex, boolean isOnCallback) {  
                  ex.printStackTrace();  
-                 Toast.makeText(mcContext, "下载失败，请检查网络和SD卡", Toast.LENGTH_SHORT).show();  
+                 Toast.makeText(mContext, "下载失败，请检查网络和SD卡", Toast.LENGTH_SHORT).show();  
 //                 progressDialog.dismiss();  
              }  
    
              @Override  
              public void onCancelled(CancelledException cex) {  
-            	 Toast.makeText(mcContext, cex+",错误", Toast.LENGTH_SHORT).show();  
+            	 Toast.makeText(mContext, cex+",错误", Toast.LENGTH_SHORT).show();  
              }  
    
              @Override  
@@ -94,6 +104,44 @@ public class HttpApi<T> {
             	 
              }  
          });  
+    }
+    
+    public static void upload(String url,String path,List<String> pathList){
+        RequestParams params = new RequestParams(url);
+        params.setMultipart(true);
+        if(null!=pathList){
+        	for (int i = 0; i <pathList.size(); i++) {
+        		params.addBodyParameter("updatafile",new File(pathList.get(i)));
+			}
+        }else{
+        	params.addBodyParameter("file",new File(path));
+        }
+        x.http().post(params, new Callback.ProgressCallback<String>() {
+
+			@Override
+			public void onSuccess(String result) {
+			}
+
+			@Override
+			public void onError(Throwable ex, boolean isOnCallback) {
+			}
+			@Override
+			public void onCancelled(CancelledException cex) {
+			}
+			@Override
+			public void onFinished() {
+			}
+			@Override
+			public void onWaiting() {
+			}
+			@Override
+			public void onStarted() {
+			}
+			@Override
+			public void onLoading(long total, long current,
+					boolean isDownloading) {
+			}
+		});
     }
 
 }
