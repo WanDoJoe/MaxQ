@@ -4,6 +4,12 @@
     android:versionCode="1"
     android:versionName="1.0" >
 
+    <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:smallScreens="true" />
+
     <uses-sdk
         android:minSdkVersion="10"
         android:targetSdkVersion="20" />
@@ -24,6 +30,8 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <uses-permission android:name="android.permission.BROADCAST_STICKY" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
 
     <application
         android:name="com.maxq.CustomApplication"
@@ -33,9 +41,9 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name="com.maxq.activity.IndexActivity"
-             android:launchMode="singleTop"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

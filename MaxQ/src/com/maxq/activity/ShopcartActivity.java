@@ -80,12 +80,12 @@ public class ShopcartActivity extends BaseActivity implements ShopcartAdapter.Ch
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.shopcar_layout);
         context = this;
-        if(getSP().getBoolean("isLogin", false)){
+//        if(getSP().getBoolean("isLogin", false)){
         	Intent intent=new Intent(this,LoginActivity.class);
         	intent.putExtra("backActivity", this.getClass().getName());
         	startActivity(intent);
         	finish();
-        }
+//        }
         
         initDatas();
         initViews();

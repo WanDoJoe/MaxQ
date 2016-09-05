@@ -3,6 +3,7 @@ package com.maxq.activity;
 import in.srain.cube.views.ptr.PtrClassicFrameLayout;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
+import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.ActionBar.LayoutParams;
 import android.content.Intent;
@@ -27,13 +28,14 @@ import com.maxq.R;
 import com.maxq.fragment.HomePageFragment;
 import com.utils.tools.DeviceUtil;
 import com.utils.widget.head.FadingActionBarHelper;
-
+@SuppressLint("NewApi")
 public class HomePageActivity extends BaseActivity {
 	private FadingActionBarHelper mFadingActionBarHelper;
 	private PtrClassicFrameLayout classicFrameLayout;
 	private int ptrTimes = 0;// 下拉次数
 	HomePageFragment fragment;
 
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub

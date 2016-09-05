@@ -4,12 +4,51 @@
     android:id="@+id/index_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#cccccc"
-    tools:ignore="MergeRootFrame" >
+    android:background="@android:color/background_light" >
 
-    <TextView
-        android:layout_width="fill_parent"
+    <LinearLayout
+        android:id="@+id/login_from_ll"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="ssssssssss" />
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:orientation="vertical" >
+
+        <EditText
+            android:id="@+id/login_username_et"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_marginTop="6dp"
+            android:background="@drawable/login_et_bg"
+            android:hint="用户名"
+            android:paddingLeft="10dp"
+            android:singleLine="true" />
+
+        <EditText
+            android:id="@+id/login_password_et"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_marginTop="6dp"
+            android:background="@drawable/login_et_bg"
+            android:hint="密码"
+            android:paddingLeft="10dp"
+            android:password="true"
+            android:singleLine="true" />
+
+        <Button
+            android:id="@+id/login_login_bn"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_marginTop="6dp"
+            android:background="@drawable/login_bn_bg"
+            android:text="登录" />
+    </LinearLayout>
+
+    <include
+        android:id="@+id/login_foot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/login_from_ll"
+        layout="@layout/content_foot_layout" />
 
 </RelativeLayout>

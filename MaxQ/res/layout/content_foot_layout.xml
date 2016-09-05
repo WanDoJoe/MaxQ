@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+  >
+
+    <RelativeLayout
+        android:id="@+id/content_foot_top"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginBottom="2dp"
+        android:layout_marginTop="2dp"
+        android:background="@drawable/content_foot_top_bg"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/content_foot_qqlogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_margin="4dp"
+            android:background="@color/white"
+            android:text="QQ登录"
+            android:textColor="#a0000000"
+            android:textSize="@dimen/txt_10" />
+
+        <Button
+            android:id="@+id/content_foot_reg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_margin="4dp"
+            android:layout_toRightOf="@+id/content_foot_qqlogin"
+            android:background="@color/white"
+            android:text="注册"
+            android:textColor="#a0000000"
+            android:textSize="@dimen/txt_10" />
+
+        <Button
+            android:id="@+id/content_foot_totop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="4dp"
+            android:background="@color/white"
+            android:text="返回顶部"
+            android:textColor="#a0000000"
+            android:textSize="@dimen/txt_10" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/content_foot_bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_below="@+id/content_foot_top"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="2dp"
+        android:layout_marginTop="2dp"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/content_foot_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_margin="4dp"
+            android:background="@color/transparent"
+            android:text="所有店铺"
+            android:textColor="#a0000000"
+            android:textSize="@dimen/txt_10" />
+
+        <Button
+            android:id="@+id/content_foot_help"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_margin="4dp"
+            android:layout_toRightOf="@+id/content_foot_all"
+            android:background="@drawable/content_foot_bottom_bg"
+            android:text="帮助中心"
+            android:textColor="#a0000000"
+            android:textSize="@dimen/txt_10" />
+
+        <Button
+            android:id="@+id/content_foot_aboutme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_margin="4dp"
+            android:layout_toRightOf="@+id/content_foot_help"
+            android:background="@color/transparent"
+            android:text="关于我们"
+            android:textColor="#a0000000"
+            android:textSize="@dimen/txt_10" />
+    </RelativeLayout>
+
+</RelativeLayout>
