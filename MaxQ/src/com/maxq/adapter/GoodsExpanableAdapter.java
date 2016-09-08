@@ -6,7 +6,9 @@ import java.util.List;
 import org.xutils.x;
 import org.xutils.image.ImageOptions;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,10 +20,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.maxq.R;
+import com.maxq.activity.GoodsDetails;
 import com.maxq.bean.GoodsBean;
 import com.maxq.bean.ImageBean;
 import com.utils.adapterutils.CommonAdapter;
 import com.utils.adapterutils.ViewHolder;
+import com.utils.tools.DeviceUtil;
 import com.utils.widget.MyGridView;
 import com.utils.widget.grid.util.DynamicHeightImageView;
 import com.utils.widget.grid.util.DynamicHeightTextView;
@@ -35,10 +39,10 @@ import com.utils.widget.grid.util.DynamicHeightTextView;
 public class GoodsExpanableAdapter extends BaseExpandableListAdapter implements
 		OnItemClickListener{
 	
-	public static final int ItemHeight = 48;// 每项的高度
-	public static final int PaddingLeft = 48;// 每项的高度
-	int HorizontalSpacing=0;// 水平间隔
-	int VerticalSpacing=0;//垂直间隔
+//	public static final int ItemHeight = 72;// 每项的高度
+//	public static final int PaddingLeft = 72;// 每项的高度
+	int HorizontalSpacing=8;// 水平间隔
+	int VerticalSpacing=8;//垂直间隔
 //	private int myPaddingLeft = 0;
 
 	private MyGridView toolbarGrid;
@@ -73,6 +77,7 @@ public class GoodsExpanableAdapter extends BaseExpandableListAdapter implements
 	 * 可自定义ExpandableListView
 	 */
 	
+	@SuppressLint("NewApi")
 	@Override
 	public View getChildView(int groupPosition, int childPosition,
 			boolean isLastChild, View convertView, ViewGroup parent) {
@@ -96,9 +101,10 @@ public class GoodsExpanableAdapter extends BaseExpandableListAdapter implements
 					name.setText(t.getTitle());
 					DynamicHeightImageView imageView = holder
 							.getView(R.id.goods_child_layout_item_img);
-					options = new ImageOptions.Builder().setSize(120, 220)
+					options = new ImageOptions.Builder().setSize(DeviceUtil.dp2px(parentContext, 240),
+							DeviceUtil.dp2px(parentContext, 240))
 							.build();
-					x.image().bind(imageView, t.getUrl(), options);
+					x.image().bind(imageView, t.getUrl(),options);
 				}
 			});
 //			toolbarGrid.setAdapter(new GoodsChildAdapter(parentContext, 
@@ -169,7 +175,8 @@ public class GoodsExpanableAdapter extends BaseExpandableListAdapter implements
 	{
 		Toast.makeText(parentContext, "当前选中的是:" + position, Toast.LENGTH_SHORT)
 				.show();
-
+		Intent intent=new Intent(parentContext,GoodsDetails.class);
+		parentContext.startActivity(intent);
 	}
 	
 	

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/member_layout"
+    android:padding="4dp" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+         >
+
+        <com.utils.widget.XCRoundImageView
+            android:id="@+id/member_headIcon_ximagv"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:background="@drawable/goods1" />
+
+        <TextView
+            android:id="@+id/member_nickname_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="6dp"
+            android:layout_toRightOf="@+id/member_headIcon_ximagv"
+            android:text="昵称："
+            android:textSize="@dimen/txt_10" />
+
+        <LinearLayout
+            android:id="@+id/member_value_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="6dp"
+            android:layout_toRightOf="@+id/member_headIcon_ximagv"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/member_jifen_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:text="积分：9999"
+                android:textSize="@dimen/txt_10_sp" />
+
+            <TextView
+                android:id="@+id/member_yuchunkuan_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:text="预存款：9999"
+                android:textSize="@dimen/txt_10_sp" />
+
+            <TextView
+                android:id="@+id/member_chongzhika_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:text="充值卡：9999"
+                android:textSize="@dimen/txt_10_sp" />
+        </LinearLayout>
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="6dp"
+            android:background="@drawable/s_jr_ico" />
+    </RelativeLayout>
+
+    
+</LinearLayout>

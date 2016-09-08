@@ -33,8 +33,9 @@
             android:layout_toLeftOf="@+id/goods_expand_title_other"
             android:layout_toRightOf="@+id/goods_expand_title_icon"
             android:background="@drawable/serchbar_bg"
-            android:drawableLeft="@drawable/ic_launcher"
+            android:drawableLeft="@drawable/search32px"
             android:gravity="center_vertical"
+            android:paddingLeft="2dp"
             android:hint="搜索"
             android:textColorHint="#cac5c5c5" />
 

@@ -28,7 +28,9 @@ import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -39,7 +41,6 @@ import android.widget.ExpandableListView.OnGroupClickListener;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -76,6 +77,7 @@ public class GoodsActivity extends BaseActivity implements ScollToTop,OnPageLoad
 	int maxCount=0;
 	int loadCount=0;
 	private long mkeyTime;
+	private boolean isNoScroll=false;
 	 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -162,6 +164,9 @@ public class GoodsActivity extends BaseActivity implements ScollToTop,OnPageLoad
 				}
 			}
 		});
+		
+		
+		
 		mPtrClassicFrameLayout.setPullToRefresh(false);//true自动刷新
 		mPtrClassicFrameLayout.setMode(Mode.BOTH);
 		mPtrClassicFrameLayout.setLoadingMinTime(1);
@@ -247,7 +252,7 @@ public class GoodsActivity extends BaseActivity implements ScollToTop,OnPageLoad
 			for (int j = 0; j < 10; j++) {
 				ImageBean bean = new ImageBean();
 				bean.setTitle(i + "=商品=" + j);
-				bean.setUrl("http://d.hiphotos.baidu.com/image/pic/item/38dbb6fd5266d01622b0017d9f2bd40735fa353d.jpg");
+				bean.setUrl("http://www.leiage.com/data/upload/shop/store/goods/1/1_05163836304681067_240.jpg");
 				images.add(bean);
 			}
 			g.setImageBeans(images);
@@ -297,6 +302,85 @@ public class GoodsActivity extends BaseActivity implements ScollToTop,OnPageLoad
 				Toast.makeText(GoodsActivity.this, ""+arg2, Toast.LENGTH_SHORT).show();
 			}
 		});
+		
+		
+		goodsexpandscrollview.setOnTouchListener(new OnTouchListener() {
+		
+		@Override
+		public boolean onTouch(View arg0, MotionEvent arg1) {
+			viewPager.setOnTouchListener(new OnTouchListener() {
+				
+				@Override
+				public boolean onTouch(View arg0, MotionEvent arg1) {
+					switch (arg1.getAction()) {
+					case MotionEvent.ACTION_DOWN:
+							mPtrClassicFrameLayout
+									.setOnTouchListener(new OnTouchListener() {
+
+										@Override
+										public boolean onTouch(View arg0,
+												MotionEvent arg1) {
+											return true;
+										}
+									});
+							isNoScroll = true;
+							break;
+						case MotionEvent.ACTION_UP:
+							mPtrClassicFrameLayout
+									.setOnTouchListener(new OnTouchListener() {
+
+										@Override
+										public boolean onTouch(View arg0,
+												MotionEvent arg1) {
+											return false;
+										}
+									});
+						isNoScroll=false;
+						break;
+					default:
+						break;
+					}
+					
+					
+					return false;
+				}
+			});
+			return isNoScroll;
+		}
+	});
+	
+//	viewPager.setOnTouchListener(new OnTouchListener() {
+//		
+//		@Override
+//		public boolean onTouch(View arg0, MotionEvent arg1) {
+//			
+//			switch (arg1.getAction()) {
+//			case MotionEvent.ACTION_DOWN:
+//				goodsexpandscrollview.setOnTouchListener(new OnTouchListener() {
+//					@Override
+//					public boolean onTouch(View arg0, MotionEvent arg1) {
+//						// TODO Auto-generated method stub
+//						return true;
+//					}
+//				});
+//				break;
+//			case MotionEvent.ACTION_UP:
+//				goodsexpandscrollview.setOnTouchListener(new OnTouchListener() {
+//					@Override
+//					public boolean onTouch(View arg0, MotionEvent arg1) {
+//						// TODO Auto-generated method stub
+//						return false;
+//					}
+//				});
+//				break;
+//			default:
+//				break;
+//			}
+//			
+//			return false;
+//		}
+//	});
+		
 		
 	}
 	/**

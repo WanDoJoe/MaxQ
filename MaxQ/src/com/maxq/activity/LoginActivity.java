@@ -1,19 +1,77 @@
 package com.maxq.activity;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.maxq.BaseActivity;
 import com.maxq.R;
+import com.maxq.utils.CostomValue;
 
 
 public class LoginActivity extends BaseActivity {
+	EditText usernameEt,passwordEt;
+	Button loginBn;
+	Context context;
 	
+	String flag="";//购物车=cart，我的=member，
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login_layout);
+		context=this;
+		statusBar(findViewById(R.id.login_content));
+		flag=getIntent().getStringExtra("loginFlag");
+		initView();
+		onLisens();
+		
 	}
 	
+	private void initView() {
+		 usernameEt=(EditText) findViewById(R.id.login_username_et);
+		 passwordEt=(EditText) findViewById(R.id.login_password_et);
+		 loginBn=(Button) findViewById(R.id.login_login_bn);
+	}
+
+	private void onLisens() {
+		loginBn.setOnClickListener(new View.OnClickListener(){
+
+			@Override
+			public void onClick(View arg0) {
+				if(usernameEt.getText().toString().trim().equals("")){
+					Toast.makeText(context, "用户名不能为空！！！", Toast.LENGTH_SHORT).show();
+					return;
+				}
+				if(passwordEt.getText().toString().trim().equals("")){
+					Toast.makeText(context, "密码不能为空！！！", Toast.LENGTH_SHORT).show();
+					return;
+				}
+				login();
+				
+			}});
+	}
+
+	protected void login() {
+		Editor e=getSP().edit();
+		e.putBoolean(CostomValue.SP_KEY_LOGIN, true);
+		e.commit();
+			Intent intent=new Intent(LoginActivity.this,IndexActivity.class);
+			intent.putExtra("loginFlag", flag);
+			startActivity(intent);
+			finish();
+		
+	}
+
+	@Override
+	public void onBackPressed() {
+		// TODO Auto-generated method stub
+		super.onBackPressed();
+	}
 //	ViewPager viewPager;
 //	StaggeredGridView expandableListView;
 //    PtrFrameLayout ptr;

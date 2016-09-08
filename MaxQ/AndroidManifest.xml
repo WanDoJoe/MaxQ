@@ -92,6 +92,18 @@
             android:screenOrientation="portrait"
             android:theme="@style/customTheme" >
         </activity>
+        <activity
+            android:name="com.maxq.activity.MemBerActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/customTheme" >
+        </activity>
+        <activity
+            android:name="com.maxq.activity.GoodsDetails"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/customTheme" >
+        </activity>
 
         <!-- service -->
         <service android:name="com.maxq.service.NetWorkService" >

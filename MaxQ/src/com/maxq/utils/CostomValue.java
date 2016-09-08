@@ -8,5 +8,6 @@ public class CostomValue {
 	public static final String CARSH_FILE_PATH=LOG_PATH+"/carsh";
 	public static final boolean DEBUG = true;
 	public static final String SP_NAME="publicCostomValue";
-
+	public static final String SP_KEY_LOGIN="isLogin";
+	
 }

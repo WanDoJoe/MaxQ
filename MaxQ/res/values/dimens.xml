@@ -19,5 +19,17 @@
     <dimen name="txt_24">24sp</dimen>
     <dimen name="txt_26">26sp</dimen>
     <dimen name="txt_28">28sp</dimen>
+    
+     <!-- 字体大小 -->
+    <dimen name="txt_10_sp">10sp</dimen>
+    <dimen name="txt_12_sp">12sp</dimen>
+    <dimen name="txt_14_sp">14sp</dimen>
+    <dimen name="txt_16_sp">16sp</dimen>
+    <dimen name="txt_18_sp">18sp</dimen>
+    <dimen name="txt_20_sp">20sp</dimen>
+    <dimen name="txt_22_sp">22sp</dimen>
+    <dimen name="txt_24_sp">24sp</dimen>
+    <dimen name="txt_26_sp">26sp</dimen>
+    <dimen name="txt_28_sp">28sp</dimen>
 
 </resources>

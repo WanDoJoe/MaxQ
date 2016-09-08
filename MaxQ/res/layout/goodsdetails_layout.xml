@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/slidedetails"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RadioGroup
+        android:id="@+id/slidedetails_radioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <RadioButton
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:button="@null"
+            android:checked="true"
+			android:background="@drawable/goodsdetail_rb_bg"
+            android:gravity="center"
+            android:text="基本信息" />
+
+        <RadioButton
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:button="@null"
+            android:gravity="center"
+            android:background="@drawable/goodsdetail_rb_bg"
+            android:text="图文详情" />
+
+        <RadioButton
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:button="@null"
+            android:gravity="center"
+            android:background="@drawable/goodsdetail_rb_bg"
+            android:text="商品评论" />
+    </RadioGroup>
+
+    <FrameLayout
+        android:id="@+id/goodsdetails_information_fl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/RadioGroup" />
+
+</RelativeLayout>
