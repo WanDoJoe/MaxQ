@@ -3,6 +3,7 @@
     android:id="@+id/product_expand_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/e9_grey"
     android:orientation="vertical" >
 
     <RelativeLayout
@@ -40,19 +41,28 @@
         android:visibility="gone" >
     </in.srain.cube.views.ptr.PtrClassicFrameLayout>
 
-    <ExpandableListView
-        android:id="@+id/product_layout_pullrefresh_exlistv"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:groupIndicator="@null"
-        android:visibility="gone" >
-    </ExpandableListView>
+        android:orientation="horizontal" >
 
-    <GridView
-        android:id="@+id/product_layout_pullrefresh_listv"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:numColumns="1" >
-    </GridView>
+        <GridView
+            android:id="@+id/product_layout_pullrefresh_listv"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:scrollbars="@null"
+            android:background="@color/white"
+            android:numColumns="1" >
+        </GridView>
+
+        <ExpandableListView
+            android:id="@+id/product_layout_pullrefresh_exlistv"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="7"
+            android:groupIndicator="@null" >
+        </ExpandableListView>
+    </LinearLayout>
 
 </LinearLayout>

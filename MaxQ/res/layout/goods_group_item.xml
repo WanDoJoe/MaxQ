@@ -2,18 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/actionbarandstatusbar_gray50"
     android:orientation="vertical" >
 
     <TextView
         android:id="@+id/goods_group_type_tv"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:background="#ad269a"
+        android:background="@color/goods_group_bg_color"
         android:gravity="center_vertical"
         android:padding="4dp"
         android:text="ssss"
         android:layout_marginTop="2dp"
-        android:layout_marginBottom="2dp"
         android:textSize="16sp" />
 
 </LinearLayout>

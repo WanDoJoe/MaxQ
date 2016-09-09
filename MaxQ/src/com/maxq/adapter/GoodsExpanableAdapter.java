@@ -41,8 +41,8 @@ public class GoodsExpanableAdapter extends BaseExpandableListAdapter implements
 	
 //	public static final int ItemHeight = 72;// 每项的高度
 //	public static final int PaddingLeft = 72;// 每项的高度
-	int HorizontalSpacing=8;// 水平间隔
-	int VerticalSpacing=8;//垂直间隔
+	int HorizontalSpacing=0;// 水平间隔
+	int VerticalSpacing=0;//垂直间隔
 //	private int myPaddingLeft = 0;
 
 	private MyGridView toolbarGrid;

@@ -103,7 +103,7 @@
                             android:layout_height="148dp"
                             android:layout_marginBottom="2dp"
                             android:layout_marginTop="2dp"
-                            android:background="#d4d4d4"
+                            android:background="@color/actionbarandstatusbar_gray50"
                             android:numColumns="4" >
                         </com.utils.widget.MyGridView>
 
