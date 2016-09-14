@@ -24,20 +24,20 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnTouchListener;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.view.ViewParent;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnGroupClickListener;
+import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -49,28 +49,35 @@ import com.maxq.R;
 import com.maxq.adapter.GoodsExpanableAdapter;
 import com.maxq.bean.GoodsBean;
 import com.maxq.bean.ImageBean;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.utils.adapterutils.CommonAdapter;
 import com.utils.adapterutils.ViewHolder;
-import com.utils.widget.MyExpandableListView;
-import com.utils.widget.MyExpandableListView.OnPageLoadListener;
-import com.utils.widget.MyGridView;
-import com.utils.widget.MyScrollView;
-import com.utils.widget.MyScrollView.OnScrollToBottomListener;
+import com.utils.tools.DeviceUtil;
+import com.utils.widget.grid.util.DynamicHeightImageView;
 import com.utils.widget.head.ScollToTop;
-import com.utils.widget.header.WindmillHeader;
+import com.utils.xutils.httpapi.CustomsWaitDialog;
 /**
  * http://www.leiage.com/wap/
  * @author sinosoft_wan
  *
  */
-public class GoodsActivity extends BaseActivity implements ScollToTop,OnPageLoadListener{
+public class GoodsActivity extends BaseActivity implements ScollToTop{
 	List<GoodsBean> beans;
 	boolean isTop,isLoadMore=false;
 	PtrClassicFrameLayout mPtrClassicFrameLayout;
-	MyScrollView goodsexpandscrollview;
 	GoodsExpanableAdapter adapter;
 	ImageButton goods_expand_title_other,scrollTopIb;
-	MyExpandableListView expandableListView;
+	ExpandableListView expandableListView;
+	CustomsWaitDialog customsWaitDialog;
+	
+	View goodsHeaderView;
+	View gvHeaderView;
+	GridView goosHeaderGridView;
+	
+	
+	
+	
+	boolean isDialog=true;
 	
 	boolean isLoadMores=false;//显示第一行解决焦点冲突；
 	boolean isBottomShow=false;
@@ -88,7 +95,26 @@ public class GoodsActivity extends BaseActivity implements ScollToTop,OnPageLoad
 		initViews();
 		setLisens();
 		setHeader();
+		setFooter();
 		statusBar(findViewById(R.id.goods_expand_layout));
+	}
+
+	
+	
+	View footView;
+	Button content_foot_totop;
+	private void setFooter() {
+		footView=LayoutInflater.from(this).inflate(R.layout.content_foot_layout,null);
+		content_foot_totop=(Button) footView.findViewById(R.id.content_foot_totop);
+		content_foot_totop.setVisibility(View.GONE);
+		expandableListView.addFooterView(footView);
+		content_foot_totop.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				System.out.println("content_foot_totop");
+				expandableListView.scrollTo(1, 1);
+			}
+		});
 	}
 
 
@@ -97,8 +123,9 @@ public class GoodsActivity extends BaseActivity implements ScollToTop,OnPageLoad
 		scrollTopIb.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				goodsexpandscrollview.scrollTo(0, 0);
 				scrollTopIb.setVisibility(View.GONE);
+				expandableListView.setSelectedGroup(0);
+				expandableListView.setSelectionAfterHeaderView();
 			}
 		});
 		goods_expand_title_other.setOnClickListener(new View.OnClickListener() {
@@ -112,68 +139,63 @@ public class GoodsActivity extends BaseActivity implements ScollToTop,OnPageLoad
 		});
 
 		
-		expandableListView.setVisibility(View.GONE);
-		expandableListView.setOnPageLoadListener(this);
-		expandableListView.setFriction(ViewConfiguration.getScrollFriction()*8);
-		// myadapter adapter=new myadapter(beans, this);
-		adapter = new GoodsExpanableAdapter(this, beans);
+		expandableListView.setFriction(ViewConfiguration.getScrollFriction()*5);
+		expandableListView.setDrawingCacheEnabled(true);
+		adapter = new GoodsExpanableAdapter(this, beans,expandableListView);
 		expandableListView.setAdapter(adapter);
-		if (adapter.getGroupCount() > 0) {
-			maxCount=adapter.getGroupCount();
-			
-			for (int i = 0; i < adapter.getGroupCount(); i++) {
-				expandableListView.expandGroup(i);
-			}
+		if (adapter.getGroupCount() > 0) {//打开expand
+//			for (int i = 0; i < adapter.getGroupCount(); i++) {
+//				expandableListView.expandGroup(i);
+//			}
 		}
 		expandableListView.setOnGroupClickListener(new OnGroupClickListener() {
 
 			@Override
-			public boolean onGroupClick(ExpandableListView arg0, View arg1,
-					int arg2, long arg3) {
+			public boolean onGroupClick(ExpandableListView parent, View v,  
+                    int groupPosition, long id) {
 				return false;
 			}
 		});
-		goodsexpandscrollview.setOnScrollToBottomLintener(new OnScrollToBottomListener() {
-			
-			@Override
-			public void onScrollBottomListener(boolean isBottom) {
-				expandableListView.setVisibility(View.VISIBLE);	
-				if(!isBottomShow){
-				scrollTopIb.setVisibility(View.VISIBLE);
-				isBottomShow=true;
-				}
-			}
-		});
-		goodsexpandscrollview.setOnScrollListener(new com.utils.widget.MyScrollView.OnScrollListener() {
-			
-			@Override
-			public void onScroll(int scrollY) {
-				System.out.println(scrollY);
-//				if(goodsexpandscrollview.isScrolledToTop()){
-//					scrollTopIb.setVisibility(View.GONE);
-//				}else{
-//					scrollTopIb.setVisibility(View.VISIBLE);
-//				}
-				
-				if(scrollY<200){
-					isTop=true;
-					scrollTopIb.setVisibility(View.GONE);
-				}else{
-					scrollTopIb.setVisibility(View.VISIBLE);
-//					isTop=false;
-				}
-			}
-		});
 		
+		expandableListView.setOnScrollListener(new AbsListView.OnScrollListener() {
+			@Override
+			public void onScrollStateChanged(AbsListView view, int scrollState) {
+						switch (scrollState) {
+
+						case AbsListView.OnScrollListener.SCROLL_STATE_IDLE:// 停止滚动
+						{
+							break;
+						}
+						case AbsListView.OnScrollListener.SCROLL_STATE_FLING:// 滚动做出了抛的动作
+						{
+							// 设置为正在滚动
+							break;
+						}
+
+						case AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL:// 正在滚动
+						{
+							// 设置为正在滚动
+							break;
+						}
+		        }  
+			}
+			@Override
+			public void onScroll(AbsListView arg0, int arg1, int arg2, int arg3) {
+				if(arg1>=2){
+					scrollTopIb.setVisibility(View.VISIBLE);
+				}else{
+					scrollTopIb.setVisibility(View.GONE);
+				}
+			}
+		});
 		
 		
 		mPtrClassicFrameLayout.setPullToRefresh(false);//true自动刷新
 		mPtrClassicFrameLayout.setMode(Mode.BOTH);
 		mPtrClassicFrameLayout.setLoadingMinTime(1);
-		final WindmillHeader header = new WindmillHeader(this);// 自定义头部
-		mPtrClassicFrameLayout.setHeaderView(header);
-		mPtrClassicFrameLayout.addPtrUIHandler(header);
-		
+//		final WindmillHeader header = new WindmillHeader(this);// 自定义头部
+//		mPtrClassicFrameLayout.setHeaderView(header);
+//		mPtrClassicFrameLayout.addPtrUIHandler(header);
 		mPtrClassicFrameLayout.setPtrHandler(new PtrHandler() {
 			
 			@Override
@@ -192,59 +214,15 @@ public class GoodsActivity extends BaseActivity implements ScollToTop,OnPageLoad
 //				frame.
 				return  PtrDefaultHandler.checkContentCanBePulledDown(frame, content, header);
 			}
-//			
-//			@Override
-//			public void onLoadMoreBegin(PtrFrameLayout frame) {
-////				 new Handler().postDelayed(new Runnable() {
-////	                   @Override
-////	                   public void run() {
-////	                	  
-//						expandableListView.setVisibility(View.VISIBLE);
-//						if(isLoadMores){
-//						expandableListView.setSelectedGroup(1);
-//						isLoadMores=false;
-//						}
-//						mPtrClassicFrameLayout.refreshComplete();
-////						goodsexpandscrollview.scrollTo(0, expandableListView.getMeasuredHeight() - expandableListView.getHeight());  
-//						
-////	                   }
-//	               },100);
-//			}
-//			
-//			@Override
-//			public boolean checkCanDoLoadMore(PtrFrameLayout frame, View content,
-//					View footer) {
-//					
-//				isLoadMore=PtrDefaultHandler2.checkContentCanBePulledUp(frame, content, footer);
-////				if(isLoadMore){
-////					mPtrClassicFrameLayout.autoLoadMore(false);
-////				}
-////				isLoadMores=true;
-//				return  isLoadMore;
-//			}
 		});
 		
-	}
-
-
-	@Override
-	public void onPageChanging(int pageSize, int pageIndex) {
-		// 加载数据
-//		  LoadBindData load = new LoadBindData(pageSize, pageIndex);
-//		  load.execute();
-	}
-
-	@Override
-	public boolean canLoadData() {
-//		return (adapter.getGroupCount() >= messageSize) ? false : true;;
-		return false;
 	}
 
 
 	private void setdata() {
 		beans = new ArrayList<GoodsBean>();
 		beans.clear();
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 8; i++) {
 			GoodsBean g = new GoodsBean();
 			List<ImageBean> images = new ArrayList<ImageBean>();
 			g.setType("类型" + i);
@@ -265,18 +243,15 @@ public class GoodsActivity extends BaseActivity implements ScollToTop,OnPageLoad
 	private void initViews() {
 		scrollTopIb=(ImageButton) findViewById(R.id.scroll_Top_Ib);
 		goods_expand_title_other=(ImageButton) findViewById(R.id.goods_expand_title_other);
-		goodsexpandscrollview=(MyScrollView) findViewById(R.id.goods_expand_scrollview);
-		expandableListView = (MyExpandableListView) findViewById(R.id.myexpandalist);
+		expandableListView = (ExpandableListView) findViewById(R.id.myexpandalist);
 		mPtrClassicFrameLayout=(PtrClassicFrameLayout) findViewById(R.id.goods_expand_ptrRefresh_fl);
 	}
 
 	//TODO goodsHeader
-	View goodsHeaderView;
-	View gvHeaderView;
-	MyGridView goosHeaderGridView;
 	private void setHeader() {
 		goodsHeaderView=LayoutInflater.from(this).inflate(R.layout.goods_header_layout,null);
-		goosHeaderGridView=(MyGridView) findViewById(R.id.goods_header_girdview);
+		goosHeaderGridView=(GridView) goodsHeaderView.findViewById(R.id.goods_header_girdview);
+		expandableListView.addHeaderView(goodsHeaderView);
 		List<ImageBean> gvIcon=new ArrayList<ImageBean>();
 		for (int i = 0; i < 8; i++) {
 			ImageBean bean=new ImageBean();
@@ -304,84 +279,6 @@ public class GoodsActivity extends BaseActivity implements ScollToTop,OnPageLoad
 		});
 		
 		
-		goodsexpandscrollview.setOnTouchListener(new OnTouchListener() {
-		
-		@Override
-		public boolean onTouch(View arg0, MotionEvent arg1) {
-			viewPager.setOnTouchListener(new OnTouchListener() {
-				
-				@Override
-				public boolean onTouch(View arg0, MotionEvent arg1) {
-					switch (arg1.getAction()) {
-					case MotionEvent.ACTION_DOWN:
-							mPtrClassicFrameLayout
-									.setOnTouchListener(new OnTouchListener() {
-
-										@Override
-										public boolean onTouch(View arg0,
-												MotionEvent arg1) {
-											return true;
-										}
-									});
-							isNoScroll = true;
-							break;
-						case MotionEvent.ACTION_UP:
-							mPtrClassicFrameLayout
-									.setOnTouchListener(new OnTouchListener() {
-
-										@Override
-										public boolean onTouch(View arg0,
-												MotionEvent arg1) {
-											return false;
-										}
-									});
-						isNoScroll=false;
-						break;
-					default:
-						break;
-					}
-					
-					
-					return false;
-				}
-			});
-			return isNoScroll;
-		}
-	});
-	
-//	viewPager.setOnTouchListener(new OnTouchListener() {
-//		
-//		@Override
-//		public boolean onTouch(View arg0, MotionEvent arg1) {
-//			
-//			switch (arg1.getAction()) {
-//			case MotionEvent.ACTION_DOWN:
-//				goodsexpandscrollview.setOnTouchListener(new OnTouchListener() {
-//					@Override
-//					public boolean onTouch(View arg0, MotionEvent arg1) {
-//						// TODO Auto-generated method stub
-//						return true;
-//					}
-//				});
-//				break;
-//			case MotionEvent.ACTION_UP:
-//				goodsexpandscrollview.setOnTouchListener(new OnTouchListener() {
-//					@Override
-//					public boolean onTouch(View arg0, MotionEvent arg1) {
-//						// TODO Auto-generated method stub
-//						return false;
-//					}
-//				});
-//				break;
-//			default:
-//				break;
-//			}
-//			
-//			return false;
-//		}
-//	});
-		
-		
 	}
 	/**
      * 此方法用于设置轮询是头部
@@ -396,7 +293,7 @@ public class GoodsActivity extends BaseActivity implements ScollToTop,OnPageLoad
     private ViewPager viewPager;
     private ImageView[] indicator_imgs ;//存放引到图片数组
     private void setViewpage(View mHeader) {
-    	viewPager=(ViewPager) findViewById(R.id.goods_header_viewpage);
+    	viewPager=(ViewPager) mHeader.findViewById(R.id.goods_header_viewpage);
     	ImageOptions options=new ImageOptions.Builder()
     	.setSize(720, 320)
     	.setUseMemCache(isImageMemCache)
@@ -414,7 +311,8 @@ public class GoodsActivity extends BaseActivity implements ScollToTop,OnPageLoad
 			}
 			list.add(imageView);
 		}
-    	 fpa=new PagerAdapter() {
+    	
+    	fpa=new PagerAdapter() {
 			
 			@Override
 			public void destroyItem(ViewGroup container, int position,
@@ -541,25 +439,6 @@ public class GoodsActivity extends BaseActivity implements ScollToTop,OnPageLoad
         }  
     }
 
-
-	
-	
-	
-	
-	//TODO GOODS ActionBar
-	/**
-     * 测量ActionBar的高度
-     */
-	private int mActionBarSize;
-    private void getActionBarSize() {
-        TypedValue typedValue = new TypedValue();
-        getTheme().resolveAttribute(android.R.attr.actionBarSize, typedValue, true);
-        mActionBarSize = TypedValue.complexToDimensionPixelSize(typedValue.data, getResources().getDisplayMetrics());
-        Log.v("zgy", "=============actionBarSize=" + mActionBarSize);
-    }
-
-
-
 	@Override
 	public boolean isScollToTop() {
 		return isTop;
@@ -585,16 +464,10 @@ public class GoodsActivity extends BaseActivity implements ScollToTop,OnPageLoad
 	  
 	  return super.onKeyDown(keyCode, event);
 	 }
-//	public void setTranslucentStatus(boolean b) {
-//        Window window = getWindow();
-//        WindowManager.LayoutParams layoutParams = window.getAttributes();
-//
-//        int bits = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
-//        if (b) {
-//            layoutParams.flags |= bits;
-//        } else {
-//            layoutParams.flags &= ~bits;
-//        }
-//        window.setAttributes(layoutParams);
-//    }
+	
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		// TODO Auto-generated method stub
+		super.onSaveInstanceState(outState);
+	}
 }

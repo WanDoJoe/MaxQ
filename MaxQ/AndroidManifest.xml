@@ -111,6 +111,36 @@
 
         <receiver android:name="com.maxq.receive.NetWorkReceive" >
         </receiver>
+        
+        <!-- KeepLive Service -->
+         <receiver
+            android:name="com.maxq.receive.keeplive.WakeUpReceiver"
+            android:process=":watch">
+            <intent-filter>
+                <action android:name="android.intent.action.USER_PRESENT"/>
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name="com.maxq.receive.keeplive.WakeUpReceiver$WakeUpAutoStartReceiver"
+            android:process=":watch">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+            </intent-filter>
+        </receiver>
+
+        <service android:name="com.maxq.service.keeplive.WorkService"/>
+
+        <service android:name="com.maxq.service.keeplive.WorkService$WorkNotificationService"/>
+
+        <service
+            android:name=".com.maxq.service.keeplive.WatchDogService"
+            android:process=":watch"/>
+
+        <service
+            android:name="com.maxq.service.keeplive.WatchDogService$WatchDogNotificationService"
+            android:process=":watch"/>
     </application>
 
 </manifest>

@@ -22,7 +22,7 @@
             android:layout_marginBottom="6dp"
             android:layout_marginTop="6dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/goods1" />
+            android:src="@drawable/def_image" />
 
         <RelativeLayout
             android:id="@+id/rl_no_edtor"

@@ -135,7 +135,6 @@ public class ProductActivity extends BaseActivity {
 				adapter=new ProductAdapter(ProductActivity.this,product_group);
 				expandableListView.setAdapter(adapter);
 //				listView.setVisibility(View.GONE);
-				backBn.setVisibility(View.VISIBLE);
 				for (int e = 0; e < adapter.getGroupCount();e++) {
 					expandableListView.expandGroup(e);
 				}
@@ -153,15 +152,6 @@ public class ProductActivity extends BaseActivity {
                 rootAdapter.getIsSelected().put(arg2,  
                         true);  
                 rootAdapter.notifyDataSetChanged();
-			}
-		});
-		backBn.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View arg0) {
-				backBn.setVisibility(View.GONE);
-				expandableListView.setVisibility(View.GONE);
-				listView.setVisibility(View.VISIBLE);
-				product_group.clear();
 			}
 		});
 		
@@ -240,7 +230,6 @@ public class ProductActivity extends BaseActivity {
 		adapter=new ProductAdapter(ProductActivity.this,product_group);
 		expandableListView.setAdapter(adapter);
 //		listView.setVisibility(View.GONE);
-		backBn.setVisibility(View.VISIBLE);
 		for (int e = 0; e < adapter.getGroupCount();e++) {
 			expandableListView.expandGroup(e);
 		}
@@ -353,6 +342,7 @@ public class ProductActivity extends BaseActivity {
 		MyGridView toolbarGrid;
 		int HorizontalSpacing=8;// 水平间隔
 		int VerticalSpacing=8;//垂直间隔
+		int NumColumns=1;
 		ImageOptions options;
 		public ProductAdapter(Context context, List<GoodsBean> list) {
 			this.context = context;
@@ -391,16 +381,23 @@ public class ProductActivity extends BaseActivity {
 //			chileView.name.setText(list.get(arg0).getImageBeans().get(arg1).getTitle());
 //			return arg3;
 			if (convertView == null) {
+				
 				convertView = LayoutInflater.from(context).inflate(R.layout.product_expand_chil_item,null);
 				toolbarGrid = (MyGridView) convertView.findViewById(R.id.product_expand_child_item_gridview);
-				toolbarGrid.setNumColumns(4);// 设置每行列数
+				toolbarGrid.setNumColumns(1);// 设置每行列数
 				toolbarGrid.setGravity(Gravity.CENTER);// 位置居中
 //				toolbarGrid.setHorizontalSpacing(HorizontalSpacing);// 水平间隔
 //				toolbarGrid.setVerticalSpacing(VerticalSpacing);//垂直间隔
 //				toolbarGrid.setBottom(10);
+				int layout;
+				if(NumColumns==1){
+					layout=R.layout.product_expand_child_item_gridview_item_one;
+				}else{
+					layout=R.layout.product_expand_child_item_gridview_item;
+				}
 				toolbarGrid.setAdapter(new CommonAdapter<ImageBean>(context,
 						list.get(groupPosition).getImageBeans(),
-						R.layout.product_expand_child_item_gridview_item) {
+						layout) {
 //					R.layout.list_index_item) {
 					@Override
 					public void conver(ViewHolder holder, ImageBean t) {

@@ -9,13 +9,17 @@ import org.xutils.image.ImageOptions;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.BaseAdapter;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.ExpandableListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,9 +33,9 @@ import com.utils.tools.DeviceUtil;
 import com.utils.widget.MyGridView;
 import com.utils.widget.grid.util.DynamicHeightImageView;
 import com.utils.widget.grid.util.DynamicHeightTextView;
+import com.utils.xutils.httpapi.CustomsWaitDialog;
 
 /**
- * 私念
  * 
  * @author Administrator
  * 
@@ -49,14 +53,17 @@ public class GoodsExpanableAdapter extends BaseExpandableListAdapter implements
 	private List<GoodsBean> goodsBeans = new ArrayList<GoodsBean>();
 
 	private Context parentContext;
-
+  
 	private LayoutInflater layoutInflater;
 	private ImageOptions options;
-
-	public GoodsExpanableAdapter(Context view, List<GoodsBean> goodsBeans) {
+	private ExpandableListView expandableListView;
+	CustomsWaitDialog waitDialog;
+	
+	public GoodsExpanableAdapter(Context view, List<GoodsBean> goodsBeans,ExpandableListView expandableListView) {
 		this.parentContext = view;
 		this.goodsBeans = goodsBeans;
-		
+		this.expandableListView=expandableListView;
+		waitDialog=new CustomsWaitDialog(parentContext);
 	}
 
 	@Override
@@ -101,10 +108,11 @@ public class GoodsExpanableAdapter extends BaseExpandableListAdapter implements
 					name.setText(t.getTitle());
 					DynamicHeightImageView imageView = holder
 							.getView(R.id.goods_child_layout_item_img);
-					options = new ImageOptions.Builder().setSize(DeviceUtil.dp2px(parentContext, 240),
-							DeviceUtil.dp2px(parentContext, 240))
-							.build();
-					x.image().bind(imageView, t.getUrl(),options);
+					
+						options = new ImageOptions.Builder().setSize(DeviceUtil.dp2px(parentContext, 240),
+								DeviceUtil.dp2px(parentContext, 240))
+								.build();
+						x.image().bind(imageView, t.getUrl(),options);
 				}
 			});
 //			toolbarGrid.setAdapter(new GoodsChildAdapter(parentContext, 
@@ -130,6 +138,12 @@ public class GoodsExpanableAdapter extends BaseExpandableListAdapter implements
 	public View getGroupView(int groupPosition, boolean isExpanded,
 			View convertView, ViewGroup parent) {
 		GroupItem groupItem=null;
+//		Log.e(this.getClass().getName(), "groupPosition"+groupPosition+"isExpanded"+isExpanded);
+		if(!isExpanded){
+			waitDialog.show();
+			Myhandler(groupPosition);
+//			this.onGroupExpanded(groupPosition);
+		}
 		if (convertView == null) {
 			groupItem=new GroupItem();
 			convertView=LayoutInflater.from(parentContext).inflate(R.layout.goods_group_item, null);
@@ -141,6 +155,20 @@ public class GoodsExpanableAdapter extends BaseExpandableListAdapter implements
 		convertView.setClickable(true);
 		groupItem.textView.setText(goodsBeans.get(groupPosition).getType());
 		return convertView;
+	}
+	public void Myhandler(final int groupPosition){
+//		synchronized (GoodsExpanableAdapter.class) {
+//			new Handler().postDelayed(new Runnable() {
+//				
+//				@Override
+//				public void run() {
+					expandableListView.expandGroup(groupPosition);
+					notifyDataSetChanged();
+					waitDialog.dismiss();
+//				}
+//			},200);
+//		}
+		
 	}
 
 	@Override
@@ -178,6 +206,5 @@ public class GoodsExpanableAdapter extends BaseExpandableListAdapter implements
 		Intent intent=new Intent(parentContext,GoodsDetails.class);
 		parentContext.startActivity(intent);
 	}
-	
 	
 }

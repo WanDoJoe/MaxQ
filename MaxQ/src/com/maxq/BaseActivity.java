@@ -1,12 +1,8 @@
 package com.maxq;
 
-import java.io.File;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -20,29 +16,41 @@ import android.view.WindowManager;
 
 import com.maxq.receive.NetWorkReceive;
 import com.maxq.service.NetWorkService;
+import com.maxq.service.keeplive.WorkService;
 import com.maxq.utils.CostomValue;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
-import com.utils.tools.AppUtils;
 import com.utils.tools.DeviceUtil;
-import com.utils.tools.SDCardUtil;
 import com.utils.widget.header.WindmillHeader;
-import com.utils.xutils.httpapi.HttpApi;
 
 @SuppressLint("CommitPrefEdits")
 public abstract class BaseActivity extends Activity {
 	Intent netWorkIntent;
 	NetWorkReceive myReceiver;
 	SharedPreferences preferences;
+	/**
+     * 黑色唤醒广播的action
+     */
+    private final static String BLACK_WAKE_ACTION = "com.wake.black";
+    
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		netWorkIntent = new Intent(this, NetWorkService.class);
 		startService(netWorkIntent);
-		registerReceiver();
 		
+//		startService(new Intent(this, LocalService.class));
+//      startService(new Intent(this, RemoteService.class));
+		startService(new Intent(this, WorkService.class));
+		registerReceiver();
+//		CustomApplication.patchManager.loadPatch();
 	}
-	
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+
+	}
 	protected SharedPreferences getSP(){
 		preferences=getSharedPreferences(CostomValue.SP_NAME, MODE_PRIVATE);
 		return preferences;
@@ -123,7 +131,30 @@ public abstract class BaseActivity extends Activity {
         IntentFilter filter=new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         myReceiver = new NetWorkReceive();
         this.registerReceiver(myReceiver, filter);
+        
     }
+	
+	private void keepliveService() {
+		//系统正常的前台Service，白色保活手段
+//            Intent whiteIntent = new Intent(getApplicationContext(), WhiteService.class);
+//            startService(whiteIntent);
+          //利用系统漏洞，灰色保活手段（API < 18 和 API >= 18 两种情况）
+//            Intent grayIntent = new Intent(getApplicationContext(), GrayService.class);
+//            startService(grayIntent);
+          //拉帮结派，黑色保活手段，利用广播唤醒队友
+//            Intent blackIntent = new Intent();
+//            blackIntent.setAction(BLACK_WAKE_ACTION);
+//            sendBroadcast(blackIntent);
+
+            /*AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+            PendingIntent operation = PendingIntent.getBroadcast(this, 123, blackIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            alarmManager.set(AlarmManager.RTC, System.currentTimeMillis(), operation);*/
+          //普通的后台进程
+//            Intent bgIntent = new Intent(getApplicationContext(), BackgroundService.class);
+//            startService(bgIntent);
+		
+	}
+
 	private  void unregisterReceiver(){
         this.unregisterReceiver(myReceiver);
     }
